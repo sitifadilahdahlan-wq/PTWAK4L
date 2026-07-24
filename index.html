@@ -224,7 +224,7 @@
                         <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
                             <div class="flex items-center justify-between p-3">
                                 <button onclick="switchTab('qshe'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
-                                    <i class="fa-solid fa-heart-pulse text-red-500 text-sm"></i> QSHE
+                                    <i class="fa-solid fa-heart-pulse text-red-500 text-sm"></i> Modul QSHE
                                 </button>
                                 <button onclick="toggleMobileSubmenu('mQsheSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -250,7 +250,7 @@
                         <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
                             <div class="flex items-center justify-between p-3">
                                 <button onclick="switchTab('security'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
-                                    <i class="fa-solid fa-shield-halved text-sky-600 text-sm"></i> Security
+                                    <i class="fa-solid fa-shield-halved text-sky-600 text-sm"></i> Modul Security
                                 </button>
                                 <button onclick="toggleMobileSubmenu('mSecSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -2193,6 +2193,15 @@ function processAction(action, data) {
                             <div class="flex flex-col items-center justify-center gap-2">
                                 <div class="h-12 w-12 rounded-2xl bg-orange-100 text-[#f24d1a] flex items-center justify-center text-xl shadow-inner">
                                     <i class="fa-solid fa-qrcode"></i>
+                                </div>
+                                <p class="font-bold text-gray-700 text-xs">Data PTW Disembunyikan</p>
+                                <p class="text-[11px] text-gray-400 max-w-sm">Silakan gunakan menu <strong>Pindai QR Code</strong> atau masukkan <strong>No. PTW</strong> pada menu di atas untuk menampilkan data.</p>
+                                <div class="flex gap-2 mt-1 text-[10px]">
+                                    <span class="text-gray-400 font-medium">Contoh Demo:</span>
+                                    <button onclick="handlePtwScanResult('PTW-2026-001')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-001</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-002')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-002</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-003')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-003</button>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -2387,15 +2396,15 @@ function processAction(action, data) {
                 titleEl.innerText = "Dashboard";
                 subTitleEl.innerText = "Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan";
             } else if (tabName === 'qshe') {
-                titleEl.innerText = "Departemen QSHE";
+                titleEl.innerText = "Modul QSHE";
                 subTitleEl.innerText = "Quality, Safety, Health & Environment Management System";
                 switchQsheSubTab(state.activeQsheSubTab);
             } else if (tabName === 'security') {
-                titleEl.innerText = "Departemen Keamanan (Security)";
+                titleEl.innerText = "Modul Keamanan (Security)";
                 subTitleEl.innerText = "Pengelolaan Sistem Keamanan, BUJP, VMS & E-Cek PTW";
                 switchSubTab(state.activeSubTab);
             } else if (tabName === 'apar') {
-                titleEl.innerText = "APAR & Hydrant";
+                titleEl.innerText = "Modul APAR & Hydrant";
                 subTitleEl.innerText = "Pengecekan, Pengadaan & Jadwal Pemeliharaan Alat Pemadam";
                 switchAparSubTab(state.activeAparSubTab);
             }
