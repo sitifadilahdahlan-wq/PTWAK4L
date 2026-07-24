@@ -59,10 +59,10 @@
         }
     </style>
 </head>
-<body class="text-gray-800 flex flex-col min-h-screen antialiased">
+<body class="text-gray-800 flex flex-col min-h-screen antialiased bg-gray-50 pb-16 md:pb-0">
 
     <!-- Toast Notifications Container -->
-    <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-[90vw] sm:max-w-md"></div>
 
     <!-- LOGIN PAGE VIEW -->
     <div id="loginPage" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-[#f24d1a] to-[#fa881b] p-4 hidden">
@@ -107,19 +107,19 @@
     <div id="dashboardApp" class="flex flex-col min-h-screen">
         
         <!-- HEADER PANEL WITH BRANDING AND NAVIGATION -->
-        <header class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-lg relative pb-32">
+        <header class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-lg relative pb-28 md:pb-32">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Top Header Bar -->
-                <div class="flex items-center justify-between h-24 border-b border-white/10">
+                <div class="flex items-center justify-between h-20 md:h-24 border-b border-white/10">
                     
                     <!-- LRT Jakarta Logo -->
                     <div class="flex items-center gap-2 py-2">
                         <img id="mainLogo" src="https://upload.wikimedia.org/wikipedia/id/0/0a/Logo_LRT_Jakarta.png" 
-                             alt="Logo LRT Jakarta" class="h-12 sm:h-14 md:h-16 w-auto object-contain brightness-0 invert transition-all duration-300"
+                             alt="Logo LRT Jakarta" class="h-10 sm:h-12 md:h-16 w-auto object-contain brightness-0 invert transition-all duration-300"
                              onerror="this.src='https://placehold.co/200x60/f24d1a/ffffff?text=LRT+JAKARTA'">
                     </div>
 
-                    <!-- Navigation Bar with Dropdowns -->
+                    <!-- Navigation Bar with Dropdowns (Desktop View) -->
                     <nav class="hidden md:flex items-center gap-2 relative">
                         <!-- Dashboard Button -->
                         <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" 
@@ -170,20 +170,24 @@
                         </div>
                     </nav>
 
-                    <!-- User Actions Profile Menu -->
-                    <div class="flex items-center gap-3">
-                        <button onclick="showToast('Sistem Keamanan Terpantau Normal & Aman', 'info')" class="relative p-2.5 hover:bg-white/10 rounded-xl transition duration-150">
+                    <!-- User Actions Profile Menu & Mobile Menu Button -->
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <button onclick="openQrScannerModal()" class="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-xl transition text-white" title="Pindai QR Code">
+                            <i class="fa-solid fa-qrcode text-base"></i>
+                        </button>
+
+                        <button onclick="showToast('Sistem Keamanan Terpantau Normal & Aman', 'info')" class="relative p-2 hover:bg-white/10 rounded-xl transition duration-150">
                             <span class="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-orange-500"></span>
-                            <i class="fa-regular fa-bell text-base"></i>
+                            <i class="fa-regular fa-bell text-sm sm:text-base"></i>
                         </button>
 
                         <div class="relative inline-block text-left" id="userMenuDropdown">
-                            <button onclick="toggleUserMenu()" class="flex items-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 px-3 py-1.5 rounded-full transition text-xs font-medium">
-                                <div class="bg-white/20 h-6 w-6 rounded-full flex items-center justify-center">
-                                    <i class="fa-regular fa-user text-[11px]"></i>
+                            <button onclick="toggleUserMenu()" class="flex items-center gap-1.5 sm:gap-2 bg-white/10 border border-white/20 hover:bg-white/20 px-2.5 sm:px-3 py-1.5 rounded-full transition text-xs font-medium">
+                                <div class="bg-white/20 h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center">
+                                    <i class="fa-regular fa-user text-[10px] sm:text-[11px]"></i>
                                 </div>
-                                <span class="hidden lg:inline text-white" id="userPillLabel">BUJP Security</span>
-                                <i class="fa-solid fa-chevron-down text-[10px] opacity-80"></i>
+                                <span class="hidden sm:inline text-white" id="userPillLabel">BUJP Security</span>
+                                <i class="fa-solid fa-chevron-down text-[9px] sm:text-[10px] opacity-80"></i>
                             </button>
                             <div id="userMenuContent" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800">
                                 <div class="px-4 py-2 border-b border-gray-100">
@@ -197,16 +201,69 @@
                                 <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 font-semibold"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Aplikasi</button>
                             </div>
                         </div>
+
+                        <!-- Mobile Hamburger Toggle Button -->
+                        <button onclick="toggleMobileMenu()" class="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-xl transition text-white">
+                            <i class="fa-solid fa-bars text-lg" id="mobileMenuIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Slide Drawer Navigation Menu -->
+                <div id="mobileDrawerMenu" class="hidden md:hidden bg-white text-gray-800 rounded-2xl mt-3 p-4 shadow-2xl border border-orange-100 animate-in slide-in-from-top duration-200">
+                    <div class="space-y-2">
+                        <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-3 rounded-xl font-bold text-xs bg-orange-50 text-orange-600 flex items-center gap-2">
+                            <i class="fa-solid fa-house"></i> Dashboard Utama
+                        </button>
+
+                        <div>
+                            <button onclick="toggleMobileSubmenu('mQsheSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
+                                <span><i class="fa-solid fa-heart-pulse text-red-500 mr-2"></i> Modul QSHE</span>
+                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                            </button>
+                            <div id="mQsheSub" class="hidden pl-6 space-y-1 py-1">
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('hazard'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Temuan Bahaya KTA/TTA</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Safety Key Metrics</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('rikes'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan Rikes & NAPZA</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('medical'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan Medical Onsite</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onclick="toggleMobileSubmenu('mSecSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
+                                <span><i class="fa-solid fa-shield-halved text-sky-600 mr-2"></i> Modul Security</span>
+                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                            </button>
+                            <div id="mSecSub" class="hidden pl-6 space-y-1 py-1">
+                                <button onclick="switchTab('security'); switchSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Matriks Security</button>
+                                <button onclick="switchTab('security'); switchSubTab('reports'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan BUJP</button>
+                                <button onclick="switchTab('security'); switchSubTab('competency'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Kompetensi Personil</button>
+                                <button onclick="switchTab('security'); switchSubTab('vms'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Visitor Management</button>
+                                <button onclick="switchTab('security'); switchSubTab('ptw'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">E-Cek PTW</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onclick="toggleMobileSubmenu('mAparSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
+                                <span><i class="fa-solid fa-fire-extinguisher text-amber-500 mr-2"></i> APAR & Hydrant</span>
+                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                            </button>
+                            <div id="mAparSub" class="hidden pl-6 space-y-1 py-1">
+                                <button onclick="switchTab('apar'); switchAparSubTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Dashboard APAR</button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('list'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Daftar Alat APAR</button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('schedule'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Jadwal & Cetak</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Hero Title Header Area -->
-                <div class="pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                     <div>
-                        <h2 class="text-3xl font-bold tracking-tight text-white" id="mainHeaderTitle">Dashboard</h2>
-                        <p class="text-xs text-white/80 mt-1 font-light" id="mainHeaderSubtitle">Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan</p>
+                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white" id="mainHeaderTitle">Dashboard</h2>
+                        <p class="text-[11px] sm:text-xs text-white/80 mt-0.5 sm:mt-1 font-light" id="mainHeaderSubtitle">Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan</p>
                     </div>
-                    <div class="flex items-center gap-2 self-start sm:self-auto text-xs text-white/90" id="headerRightArea">
+                    <div class="flex items-center gap-2 self-start sm:self-auto text-[11px] sm:text-xs text-white/90 bg-white/10 px-3 py-1 rounded-full md:bg-transparent md:p-0" id="headerRightArea">
                         <i class="fa-regular fa-clock"></i>
                         <span id="liveTimestamp">Kamis, 23 Juli 2026</span>
                     </div>
@@ -215,69 +272,17 @@
         </header>
 
         <!-- MAIN APP BODY -->
-        <main class="relative z-20 flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 -mt-20 pb-16">
+        <main class="relative z-20 flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 -mt-16 sm:-mt-20 pb-24 md:pb-16">
             
-            <!-- ================= TAB 1: DASHBOARD ================= -->
-            <div id="tabView-dashboard" class="tab-view flex flex-col gap-8">
+            <!-- TAB 1: DASHBOARD VIEW -->
+            <div id="tabView-dashboard" class="tab-view flex flex-col gap-5">
                 
-                <!-- TOP STATUS KPI CARDS -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <!-- Safety Status Card -->
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex items-start justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-400">Safety Status</p>
-                            <h3 class="text-2xl font-bold text-emerald-500 mt-2">Good</h3>
-                            <p class="text-[10px] text-gray-400 mt-1">0 fatalities, 0 LTI bulan ini</p>
-                        </div>
-                        <div class="text-emerald-500 bg-emerald-50/50 p-2.5 rounded-xl">
-                            <i class="fa-solid fa-pulse text-sm"></i>
-                        </div>
-                    </div>
-
-                    <!-- Security Status Card -->
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex items-start justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-400">Security Status</p>
-                            <h3 class="text-2xl font-bold text-emerald-600 mt-2">Secure</h3>
-                            <p class="text-[10px] text-gray-400 mt-1">0 incident bulan ini</p>
-                        </div>
-                        <div class="text-sky-500 bg-sky-50/50 p-2.5 rounded-xl">
-                            <i class="fa-solid fa-shield-halved text-sm"></i>
-                        </div>
-                    </div>
-
-                    <!-- Pending Reports Card -->
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex items-start justify-between cursor-pointer" onclick="scrollToPendingSection()">
-                        <div>
-                            <p class="text-xs font-medium text-gray-400">Pending Reports</p>
-                            <h3 class="text-2xl font-bold text-amber-500 mt-2" id="kpi-pending-reports">1</h3>
-                            <p class="text-[10px] text-gray-400 mt-1">1 butuh perhatian</p>
-                        </div>
-                        <div class="text-amber-500 bg-amber-50/50 p-2.5 rounded-xl">
-                            <i class="fa-solid fa-file-invoice text-sm"></i>
-                        </div>
-                    </div>
-
-                    <!-- Total Personel Card -->
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition flex items-start justify-between">
-                        <div>
-                            <p class="text-xs font-medium text-gray-400">Total Personel</p>
-                            <h3 class="text-2xl font-bold text-purple-600 mt-2" id="kpi-personnel-count">28</h3>
-                            <p class="text-[10px] text-gray-400 mt-1">Personel Security Aktif</p>
-                        </div>
-                        <div class="text-purple-500 bg-purple-50/50 p-2.5 rounded-xl">
-                            <i class="fa-solid fa-users text-sm"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- QUICK ACCESS PANEL -->
+                <!-- AKSES CEPAT SECTION -->
                 <div>
-                    <h4 class="text-base font-bold text-gray-800 mb-4 tracking-tight">Akses Cepat</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        <div onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md hover:border-emerald-200 transition cursor-pointer flex items-center gap-4">
-                            <div class="bg-emerald-50 text-emerald-500 p-3 rounded-xl">
-                                <i class="fa-solid fa-heart-pulse text-base"></i>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                        <div onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-emerald-200 transition cursor-pointer flex items-center gap-3.5">
+                            <div class="bg-emerald-50 text-emerald-500 p-2.5 rounded-xl shrink-0">
+                                <i class="fa-solid fa-heart-pulse text-sm"></i>
                             </div>
                             <div>
                                 <h5 class="text-xs font-bold text-gray-800">Safety Metrics</h5>
@@ -285,9 +290,9 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md hover:border-sky-200 transition cursor-pointer flex items-center gap-4">
-                            <div class="bg-sky-50 text-sky-500 p-3 rounded-xl">
-                                <i class="fa-solid fa-shield-halved text-base"></i>
+                        <div onclick="switchTab('security'); switchSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-sky-200 transition cursor-pointer flex items-center gap-3.5">
+                            <div class="bg-sky-50 text-sky-500 p-2.5 rounded-xl shrink-0">
+                                <i class="fa-solid fa-shield-halved text-sm"></i>
                             </div>
                             <div>
                                 <h5 class="text-xs font-bold text-gray-800">Security Metrics</h5>
@@ -295,9 +300,9 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('vms')" class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md hover:border-purple-200 transition cursor-pointer flex items-center gap-4">
-                            <div class="bg-purple-50 text-purple-500 p-3 rounded-xl">
-                                <i class="fa-solid fa-user-check text-base"></i>
+                        <div onclick="switchTab('security'); switchSubTab('vms')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-purple-200 transition cursor-pointer flex items-center gap-3.5">
+                            <div class="bg-purple-50 text-purple-500 p-2.5 rounded-xl shrink-0">
+                                <i class="fa-solid fa-user-check text-sm"></i>
                             </div>
                             <div>
                                 <h5 class="text-xs font-bold text-gray-800">Visitor Management</h5>
@@ -305,9 +310,9 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('reports')" class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md hover:border-amber-200 transition cursor-pointer flex items-center gap-4">
-                            <div class="bg-amber-50 text-amber-500 p-3 rounded-xl">
-                                <i class="fa-solid fa-file-invoice text-base"></i>
+                        <div onclick="switchTab('security'); switchSubTab('reports')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-amber-200 transition cursor-pointer flex items-center gap-3.5">
+                            <div class="bg-amber-50 text-amber-500 p-2.5 rounded-xl shrink-0">
+                                <i class="fa-solid fa-file-invoice text-sm"></i>
                             </div>
                             <div>
                                 <h5 class="text-xs font-bold text-gray-800">Laporan BUJP</h5>
@@ -318,8 +323,8 @@
                 </div>
 
                 <!-- COMPETENCE MATRIX & EXPIRATIONS -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm lg:col-span-2">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                    <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm lg:col-span-2">
                         <div class="flex justify-between items-start mb-2">
                             <div>
                                 <h4 class="text-sm font-bold text-gray-800">Ringkasan Kompetensi Keahlian</h4>
@@ -752,23 +757,25 @@
             <!-- ================= TAB 3: SECURITY VIEW ================= -->
             <div id="tabView-security" class="tab-view hidden flex flex-col gap-6">
                 
-                <!-- SUB-NAV TAB BAR -->
-                <div class="bg-white rounded-2xl border border-gray-100 p-1.5 shadow-sm flex flex-wrap gap-1">
-                    <button onclick="switchSubTab('metrics')" id="subbtn-metrics" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md">
-                        <i class="fa-solid fa-chart-line mr-1.5"></i> Matriks Keamanan
-                    </button>
-                    <button onclick="switchSubTab('reports')" id="subbtn-reports" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-                        <i class="fa-solid fa-folder-open mr-1.5"></i> Laporan BUJP
-                    </button>
-                    <button onclick="switchSubTab('competency')" id="subbtn-competency" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-                        <i class="fa-solid fa-id-card-clip mr-1.5"></i> Kompetensi Personil
-                    </button>
-                    <button onclick="switchSubTab('vms')" id="subbtn-vms" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-                        <i class="fa-solid fa-user-shield mr-1.5"></i> Visitor Management
-                    </button>
-                    <button onclick="switchSubTab('ptw')" id="subbtn-ptw" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-500 hover:bg-gray-50 hover:text-gray-900">
-                        <i class="fa-solid fa-file-signature mr-1.5"></i> E-Cek PTW
-                    </button>
+                <!-- SUB-NAV TAB BAR (HIDDEN AS IT IS ACCESSIBLE VIA TOP NAVIGATION DROPDOWN) -->
+                <div class="hidden bg-gradient-to-r from-[#f24d1a] to-[#fa881b] p-2.5 rounded-2xl shadow-md">
+                    <div class="bg-white rounded-2xl p-1.5 flex flex-wrap sm:flex-nowrap gap-1 shadow-inner">
+                        <button onclick="switchSubTab('metrics')" id="subbtn-metrics" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-chart-line"></i> Matriks Keamanan
+                        </button>
+                        <button onclick="switchSubTab('reports')" id="subbtn-reports" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-folder-open"></i> Laporan BUJP
+                        </button>
+                        <button onclick="switchSubTab('competency')" id="subbtn-competency" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-id-card-clip"></i> Kompetensi Personil
+                        </button>
+                        <button onclick="switchSubTab('vms')" id="subbtn-vms" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-user-shield"></i> Visitor Management
+                        </button>
+                        <button onclick="switchSubTab('ptw')" id="subbtn-ptw" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-file-signature"></i> E-Cek PTW
+                        </button>
+                    </div>
                 </div>
 
                 <!-- SUB-VIEW 1: SECURITY KEY METRIC -->
@@ -980,13 +987,32 @@
 
                 <!-- SUB-VIEW 3: MATRIKS KOMPETENSI PERSONEL -->
                 <div id="subview-competency" class="security-subview hidden flex flex-col gap-6">
-                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <!-- COMPETENCY SECONDARY SUB-NAV (NEW SCREENSHOT 2 LAYOUT) -->
+                    <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] p-2.5 rounded-2xl shadow-md">
+                        <div class="bg-gray-100/80 rounded-2xl p-1.5 flex flex-wrap sm:flex-nowrap gap-1 shadow-inner">
+                            <button onclick="switchCompetencySubTab('matrix')" id="compbtn-matrix" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-white text-gray-800 shadow-sm flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-gray-700"></i> Matriks Kompetensi
+                            </button>
+                            <button onclick="switchCompetencySubTab('personnel')" id="compbtn-personnel" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-users"></i> Manajemen Personel
+                            </button>
+                            <button onclick="switchCompetencySubTab('job')" id="compbtn-job" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-briefcase"></i> Manajemen Jabatan
+                            </button>
+                            <button onclick="switchCompetencySubTab('skills')" id="compbtn-skills" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-lines"></i> Manajemen Keahlian
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- COMPETENCY TAB CONTENT PANELS -->
+                    <div id="comp-panel-matrix" class="comp-panel bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                             <div>
                                 <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
                                     <i class="fa-solid fa-id-card-clip text-[#f24d1a]"></i> Matriks Kompetensi Personel
                                 </h3>
-                                <p class="text-xs text-gray-400 mt-0.5">Status sertifikasi dan kompetensi seluruh personel security.</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Status sertifikasi dan kualifikasi keahlian seluruh personel security.</p>
                             </div>
                             <div class="relative w-full sm:w-64">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
@@ -999,6 +1025,37 @@
                         <div id="personnelCardsContainer" class="space-y-6">
                             <!-- Populated dynamically -->
                         </div>
+                    </div>
+
+                    <div id="comp-panel-personnel" class="comp-panel hidden bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-users text-[#f24d1a] mr-2"></i> Manajemen Personel Security</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Pengelolaan biodata dan penempatan tugas anggota security</p>
+                            </div>
+                            <button onclick="showToast('Fitur Tambah Personel Baru dibuka', 'info')" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow">+ Tambah Personel</button>
+                        </div>
+                        <div class="text-xs text-gray-500 font-light">Data anggota security aktif dan regu operasional terpantau lengkap.</div>
+                    </div>
+
+                    <div id="comp-panel-job" class="comp-panel hidden bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-briefcase text-[#f24d1a] mr-2"></i> Manajemen Jabatan</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Struktur tingkatan jabatan (Danton, Danru, Anggota, Inspector)</p>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 font-light">Struktur jabatan operational BUJP Security LRT Jakarta.</div>
+                    </div>
+
+                    <div id="comp-panel-skills" class="comp-panel hidden bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-file-lines text-[#f24d1a] mr-2"></i> Manajemen Keahlian & Sertifikasi</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Kategori pelatihan wajib, Gada Pratama, Gada Madya, P3K, Damkar</p>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 font-light">Katalog sertifikasi standar operasional keselamatan dan keamanan.</div>
                     </div>
                 </div>
 
@@ -1124,67 +1181,50 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <!-- HEADER AREA: Title on left, Search + Scan QR + Input PTW Baru on right -->
+                        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6">
                             <div>
                                 <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
                                     <i class="fa-solid fa-shield-halved text-[#f24d1a]"></i> E-Cek & Verifikasi Permit to Work (PTW)
                                 </h3>
                                 <p class="text-xs text-gray-400 mt-0.5">Pengecekan kelayakan keselamatan & izin kerja pekerjaan berisiko di area operasional LRT Jakarta.</p>
                             </div>
-                            <button onclick="openModal('addPtwModal')" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md flex items-center justify-center gap-1.5">
-                                <i class="fa-solid fa-plus"></i> Input PTW Baru
-                            </button>
-                        </div>
-
-                        <!-- SCAN PROMPT INITIAL STATE (Data hidden by default) -->
-                        <div id="ptwScanPromptState" class="p-8 md:p-12 border-2 border-dashed border-orange-200 bg-orange-50/30 rounded-3xl text-center flex flex-col items-center justify-center my-2">
-                            <div class="h-20 w-20 rounded-2xl bg-gradient-to-br from-[#f24d1a] to-[#fa881b] text-white flex items-center justify-center shadow-lg shadow-orange-500/20 mb-4 animate-bounce">
-                                <i class="fa-solid fa-qrcode text-3xl"></i>
-                            </div>
-                            <h4 class="text-base font-bold text-gray-800 mb-1">Daftar Data PTW Disembunyikan</h4>
-                            <p class="text-xs text-gray-500 max-w-md leading-relaxed font-light mb-6">Untuk alasan keamanan dan kerahasiaan operasional, data PTW hanya dapat ditampilkan setelah memindai QR Code resmi pada dokumen PTW fisik atau badge pekerjaan.</p>
                             
-                            <div class="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md justify-center">
-                                <button onclick="openQrScannerModal()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white text-xs font-bold transition shadow-lg shadow-orange-500/20 flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-camera text-sm"></i> Pindai / Scan QR Code PTW
-                                </button>
-                                <span class="text-xs font-semibold text-gray-400">atau</span>
-                                <div class="relative w-full sm:w-64">
-                                    <input type="text" id="ptwManualInput" placeholder="Masukkan No. PTW..." class="w-full pl-3 pr-9 py-2.5 rounded-xl border border-gray-200 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-lrtOrange-500">
-                                    <button onclick="handleManualPtwSearch()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-orange-500 hover:text-orange-600">
-                                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                            <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+                                <div class="relative flex-1 sm:w-56">
+                                    <input type="text" id="ptwHeaderSearchInput" onkeyup="if(event.key==='Enter') handleHeaderPtwSearch()" placeholder="Masukkan No. PTW..." class="w-full pl-3 pr-8 py-2 rounded-xl border border-gray-200 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-lrtOrange-500">
+                                    <button onclick="handleHeaderPtwSearch()" class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-orange-500 hover:text-orange-600">
+                                        <i class="fa-solid fa-magnifying-glass text-xs"></i>
                                     </button>
                                 </div>
-                            </div>
-
-                            <div class="mt-6 flex flex-wrap justify-center gap-2 text-[11px] text-gray-400">
-                                <span class="font-semibold">Contoh Demo PTW:</span>
-                                <button onclick="handlePtwScanResult('PTW-2026-001')" class="underline hover:text-orange-600 font-mono">PTW-2026-001</button> •
-                                <button onclick="handlePtwScanResult('PTW-2026-002')" class="underline hover:text-orange-600 font-mono">PTW-2026-002</button> •
-                                <button onclick="handlePtwScanResult('PTW-2026-003')" class="underline hover:text-orange-600 font-mono">PTW-2026-003</button>
+                                <button onclick="openQrScannerModal()" class="px-3.5 py-2 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[#f24d1a] text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                                    <i class="fa-solid fa-qrcode text-sm"></i> Pindai QR Code
+                                </button>
+                                <button onclick="openModal('addPtwModal')" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-md flex items-center gap-1.5 shrink-0">
+                                    <i class="fa-solid fa-plus"></i> Input PTW Baru
+                                </button>
                             </div>
                         </div>
 
-                        <!-- SCANNED PTW RESULT CONTAINER (Hidden until scanned) -->
-                        <div id="ptwScannedResultContainer" class="hidden space-y-6">
-                            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-md">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-10 w-10 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0">
-                                        <i class="fa-solid fa-circle-check text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-xs font-bold uppercase tracking-wider">Hasil Pindaian QR Code Berhasil</h4>
-                                        <p class="text-[11px] text-white/90">Data Permit to Work resmi terverifikasi dari sistem LRT Jakarta.</p>
-                                    </div>
-                                </div>
-                                <button onclick="resetPtwScan()" class="px-3.5 py-1.5 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs font-bold transition flex items-center gap-1.5 shrink-0">
-                                    <i class="fa-solid fa-qrcode"></i> Pindai QR Lain
-                                </button>
-                            </div>
-
-                            <div id="scannedPtwCardContent" class="bg-gray-50/70 border border-gray-100 rounded-2xl p-6">
-                                <!-- Populated dynamically by JS -->
-                            </div>
+                        <!-- PERMANENT TABLE HEADER ("HEAD DATA") -->
+                        <div class="overflow-x-auto rounded-2xl border border-gray-100">
+                            <table class="min-w-full text-left text-xs divide-y divide-gray-100">
+                                <thead class="bg-gray-50 text-gray-500 font-bold uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-4 py-3">No. PTW</th>
+                                        <th class="px-4 py-3">Jenis Pekerjaan</th>
+                                        <th class="px-4 py-3">Pelaksana / Kontraktor</th>
+                                        <th class="px-4 py-3">Lokasi</th>
+                                        <th class="px-4 py-3">Masa Berlaku</th>
+                                        <th class="px-4 py-3">Supervisor</th>
+                                        <th class="px-4 py-3">Status</th>
+                                        <th class="px-4 py-3 text-right">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ptwTableBody" class="divide-y divide-gray-50 bg-white text-gray-700">
+                                    <!-- Populated dynamically or displays default hidden placeholder -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -1314,19 +1354,46 @@
             </div>
 
         </main>
+
+        <!-- MOBILE BOTTOM NAVIGATION BAR (Visible on Mobile / HP View) -->
+        <div class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-gray-200 z-40 md:hidden flex justify-around py-2 px-1 text-center shadow-lg">
+            <button onclick="switchTab('dashboard')" id="bnav-dashboard" class="flex-1 flex flex-col items-center py-1 text-orange-600">
+                <i class="fa-solid fa-house text-base"></i>
+                <span class="text-[9px] font-bold mt-1">Home</span>
+            </button>
+            <button onclick="switchTab('qshe')" id="bnav-qshe" class="flex-1 flex flex-col items-center py-1 text-gray-400">
+                <i class="fa-solid fa-heart-pulse text-base"></i>
+                <span class="text-[9px] font-medium mt-1">QSHE</span>
+            </button>
+            <button onclick="openQrScannerModal()" class="flex-1 flex flex-col items-center -mt-5">
+                <div class="h-12 w-12 rounded-full bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white flex items-center justify-center shadow-lg shadow-orange-500/30 ring-4 ring-white">
+                    <i class="fa-solid fa-qrcode text-xl"></i>
+                </div>
+                <span class="text-[9px] font-bold text-gray-600 mt-1">Scan PTW</span>
+            </button>
+            <button onclick="switchTab('security')" id="bnav-security" class="flex-1 flex flex-col items-center py-1 text-gray-400">
+                <i class="fa-solid fa-shield-halved text-base"></i>
+                <span class="text-[9px] font-medium mt-1">Security</span>
+            </button>
+            <button onclick="switchTab('apar')" id="bnav-apar" class="flex-1 flex flex-col items-center py-1 text-gray-400">
+                <i class="fa-solid fa-fire-extinguisher text-base"></i>
+                <span class="text-[9px] font-medium mt-1">APAR</span>
+            </button>
+        </div>
+
     </div>
 
-    <!-- ================= SYSTEM MODALS ================= -->
+    <!-- ================= SYSTEM MODALS (Scannable & Mobile Responsive) ================= -->
 
     <!-- GOOGLE SHEETS API CONNECTOR CONFIGURATION MODAL -->
-    <div id="dbSettingsModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+    <div id="dbSettingsModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-lg p-5 sm:p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-start pb-4 border-b border-gray-100">
                 <div>
                     <h3 class="text-sm font-bold text-gray-800 flex items-center gap-1.5"><i class="fa-solid fa-database text-orange-500"></i> Hubungkan Google Spreadsheet</h3>
                     <p class="text-[11px] text-gray-400 mt-0.5">Integrasikan form web app portal AK4L secara real-time ke lembar kerja Anda.</p>
                 </div>
-                <button type="button" onclick="closeModal('dbSettingsModal')" class="text-gray-400 hover:text-gray-600 text-sm">
+                <button type="button" onclick="closeModal('dbSettingsModal')" class="text-gray-400 hover:text-gray-600 text-sm p-1">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -1350,14 +1417,14 @@
     </div>
 
     <!-- GOOGLE APPS SCRIPT CODE SETUP MODAL -->
-    <div id="appsScriptModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-2xl p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+    <div id="appsScriptModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-2xl p-5 sm:p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-start pb-4 border-b border-gray-100">
                 <div>
                     <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-code text-blue-500 text-base"></i> Script Google Apps Script (Code.gs)</h3>
                     <p class="text-[11px] text-gray-400 mt-0.5">Gunakan kode ini pada editor <span class="font-semibold text-gray-700">Code.gs</span> agar aplikasi dapat dibuka langsung dari URL Apps Script tanpa menampilkan teks polos.</p>
                 </div>
-                <button type="button" onclick="closeModal('appsScriptModal')" class="text-gray-400 hover:text-gray-600 text-sm">
+                <button type="button" onclick="closeModal('appsScriptModal')" class="text-gray-400 hover:text-gray-600 text-sm p-1">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -1423,8 +1490,8 @@ function processAction(action, data) {
     </div>
 
     <!-- NEW APAR SCHEDULE MODAL -->
-    <div id="scheduleModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+    <div id="scheduleModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-2xl w-full max-w-md p-5 sm:p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-start">
                 <div>
                     <h3 class="text-sm font-bold text-gray-800">Jadwalkan Inspeksi Baru</h3>
@@ -1463,13 +1530,13 @@ function processAction(action, data) {
     </div>
 
     <!-- NEW HAZARD MODAL (KTA/TTA) -->
-    <div id="hazardModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-5 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-triangle-exclamation"></i> Laporkan Temuan Bahaya</h3>
+    <div id="hazardModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 sm:p-5 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="font-bold text-xs sm:text-sm"><i class="fa-solid fa-triangle-exclamation"></i> Laporkan Temuan Bahaya</h3>
                 <button onclick="closeModal('hazardModal')" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="submitHazardReport(event)" class="p-6 space-y-4">
+            <form onsubmit="submitHazardReport(event)" class="p-5 sm:p-6 space-y-4">
                 <div>
                     <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Judul Temuan</label>
                     <input type="text" id="hzTitle" placeholder="Contoh: Kabel sensor peron terkelupas" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
@@ -1492,13 +1559,13 @@ function processAction(action, data) {
     </div>
 
     <!-- NEW BUJP REPORT UPLOAD MODAL -->
-    <div id="uploadReportModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-5 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Laporan Baru</h3>
+    <div id="uploadReportModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 sm:p-5 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="font-bold text-xs sm:text-sm"><i class="fa-solid fa-cloud-arrow-up"></i> Upload Laporan Baru</h3>
                 <button onclick="closeModal('uploadReportModal')" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="submitBujpReport(event)" class="p-6 space-y-4">
+            <form onsubmit="submitBujpReport(event)" class="p-5 sm:p-6 space-y-4">
                 <div>
                     <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Nama Laporan</label>
                     <input type="text" id="uplRepName" placeholder="Contoh: Laporan Kegiatan Absensi Mingguan" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
@@ -1521,13 +1588,13 @@ function processAction(action, data) {
     </div>
 
     <!-- NEW E-CEK PTW MODAL -->
-    <div id="addPtwModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-5 flex justify-between items-center">
-                <h3 class="font-bold text-sm"><i class="fa-solid fa-file-signature"></i> Input Permit to Work (PTW) Baru</h3>
+    <div id="addPtwModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 sm:p-5 flex justify-between items-center sticky top-0 z-10">
+                <h3 class="font-bold text-xs sm:text-sm"><i class="fa-solid fa-file-signature"></i> Input Permit to Work (PTW) Baru</h3>
                 <button onclick="closeModal('addPtwModal')" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="submitNewPtw(event)" class="p-6 space-y-4">
+            <form onsubmit="submitNewPtw(event)" class="p-5 sm:p-6 space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Nomor PTW *</label>
@@ -1580,9 +1647,9 @@ function processAction(action, data) {
     </div>
 
     <!-- QR CODE SCANNER CAMERA MODAL -->
-    <div id="qrScannerModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 flex justify-between items-center">
+    <div id="qrScannerModal" class="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 flex justify-between items-center sticky top-0 z-10">
                 <h3 class="font-bold text-xs sm:text-sm flex items-center gap-2">
                     <i class="fa-solid fa-qrcode text-base"></i> Pindai QR Code Permit To Work
                 </h3>
@@ -1590,11 +1657,11 @@ function processAction(action, data) {
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="p-5 flex flex-col items-center">
+            <div class="p-4 sm:p-5 flex flex-col items-center">
                 <p class="text-xs text-gray-500 mb-3 text-center font-medium">Arahkan kamera ke QR Code yang tertera pada dokumen PTW fisik atau badge lokasi.</p>
                 <div id="reader" class="w-full rounded-2xl overflow-hidden border-2 border-dashed border-orange-300 bg-gray-50 min-h-[200px] flex items-center justify-center"></div>
                 
-                <div class="mt-4 flex flex-col items-center gap-2">
+                <div class="mt-4 flex flex-col items-center gap-2 w-full">
                     <span class="text-[10px] text-gray-400 font-semibold uppercase flex items-center gap-1.5">
                         <i class="fa-solid fa-camera animate-pulse text-orange-500"></i> Scanning Kamera
                     </span>
@@ -1610,20 +1677,20 @@ function processAction(action, data) {
     </div>
 
     <!-- DISPLAY PTW QR CODE MODAL -->
-    <div id="ptwQrModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 text-center">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 flex justify-between items-center">
+    <div id="ptwQrModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 text-center max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 flex justify-between items-center sticky top-0 z-10">
                 <h3 class="font-bold text-xs uppercase tracking-wider" id="qrModalTitle">QR Code PTW</h3>
                 <button onclick="closeModal('ptwQrModal')" class="text-white/80 hover:text-white text-base">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="p-6 flex flex-col items-center">
+            <div class="p-5 sm:p-6 flex flex-col items-center">
                 <p class="text-xs text-gray-600 font-bold mb-1" id="qrModalPtwNo">PTW-2026-001</p>
                 <p class="text-[10px] text-gray-400 mb-4" id="qrModalContractor">PT Sinar Teknik</p>
                 
                 <div class="p-3 bg-white rounded-2xl border-2 border-orange-100 shadow-inner mb-4 inline-block">
-                    <img id="qrModalImage" src="" alt="QR Code PTW" class="w-48 h-48 object-contain">
+                    <img id="qrModalImage" src="" alt="QR Code PTW" class="w-40 h-40 sm:w-48 sm:h-48 object-contain">
                 </div>
 
                 <p class="text-[10px] text-gray-400 leading-relaxed mb-5">Pindai QR Code ini menggunakan aplikasi AK4L untuk verifikasi status izin kerja secara langsung di lapangan.</p>
@@ -1637,18 +1704,18 @@ function processAction(action, data) {
     </div>
 
     <!-- DETAIL PERMIT TO WORK (PTW) MODAL RESULT -->
-    <div id="ptwDetailModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-5 flex justify-between items-center">
+    <div id="ptwDetailModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+        <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 sm:p-5 flex justify-between items-center sticky top-0 z-10">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-file-contract text-lg"></i>
-                    <h3 class="font-bold text-sm uppercase tracking-wide">Data Permit To Work (PTW)</h3>
+                    <i class="fa-solid fa-file-contract text-base sm:text-lg"></i>
+                    <h3 class="font-bold text-xs sm:text-sm uppercase tracking-wide">Data Permit To Work (PTW)</h3>
                 </div>
                 <button onclick="closeModal('ptwDetailModal')" class="text-white/80 hover:text-white text-base">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="p-6 space-y-4">
+            <div class="p-5 sm:p-6 space-y-4">
                 <div class="flex items-center justify-between border-b border-gray-100 pb-3">
                     <div>
                         <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Nomor PTW</span>
@@ -1700,6 +1767,7 @@ function processAction(action, data) {
             activeSubTab: 'metrics',
             activeQsheSubTab: 'hazard',
             activeAparSubTab: 'dashboard',
+            activeCompSubTab: 'matrix',
             totalPersonnel: 28,
             personnel: [
                 { name: 'Ahmad Supriadi', role: 'Danton Security - Posko Utama', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80', skills: { basic: true, fire: true, aid: true, crowd: true, cctv: true, driving: true } },
@@ -1727,6 +1795,26 @@ function processAction(action, data) {
                 { no: 'PTW-2026-005', type: 'Confined Space', contractor: 'PT Clean Environment', location: 'Sump Pit Stasiun Pegangsaan Dua', expiry: '2026-07-23', time: '11:00 - 16:00', supervisor: 'Fajar N.', status: 'Aktif' }
             ]
         };
+
+        function toggleMobileMenu() {
+            const drawer = document.getElementById('mobileDrawerMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            if (drawer) {
+                drawer.classList.toggle('hidden');
+                if (icon) {
+                    if (drawer.classList.contains('hidden')) {
+                        icon.className = 'fa-solid fa-bars text-lg';
+                    } else {
+                        icon.className = 'fa-solid fa-xmark text-lg';
+                    }
+                }
+            }
+        }
+
+        function toggleMobileSubmenu(id) {
+            const sub = document.getElementById(id);
+            if (sub) sub.classList.toggle('hidden');
+        }
 
         let html5QrcodeScanner = null;
 
@@ -1765,8 +1853,8 @@ function processAction(action, data) {
             handlePtwScanResult(ptwNo);
         }
 
-        function handleManualPtwSearch() {
-            const input = document.getElementById('ptwManualInput')?.value?.trim();
+        function handleHeaderPtwSearch() {
+            const input = document.getElementById('ptwHeaderSearchInput')?.value?.trim();
             if (!input) {
                 showToast("Masukkan Nomor PTW terlebih dahulu", "warning");
                 return;
@@ -1783,90 +1871,78 @@ function processAction(action, data) {
                 return;
             }
 
-            document.getElementById('ptwScanPromptState')?.classList.add('hidden');
-            const resultContainer = document.getElementById('ptwScannedResultContainer');
-            const cardContent = document.getElementById('scannedPtwCardContent');
-
-            if (resultContainer && cardContent) {
-                cardContent.innerHTML = `
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-200 pb-4 mb-5 gap-3">
-                        <div>
-                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-wider block">Nomor Permit to Work</span>
-                            <h3 class="text-xl font-black text-gray-800 font-mono mt-0.5">${ptw.no}</h3>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="px-3.5 py-1 rounded-full text-xs font-bold ${
+            const tbody = document.getElementById('ptwTableBody');
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr class="hover:bg-orange-50/30 transition">
+                        <td class="px-4 py-3.5 font-mono font-bold text-gray-900 flex items-center gap-1.5">
+                            <i class="fa-solid fa-qrcode text-orange-500"></i> ${ptw.no}
+                        </td>
+                        <td class="px-4 py-3.5 font-semibold text-gray-800">${ptw.type}</td>
+                        <td class="px-4 py-3.5 text-gray-700">${ptw.contractor}</td>
+                        <td class="px-4 py-3.5 text-gray-700">${ptw.location}</td>
+                        <td class="px-4 py-3.5 text-gray-600">
+                            <div>${ptw.expiry}</div>
+                            <div class="text-[10px] text-gray-400 font-mono">${ptw.time}</div>
+                        </td>
+                        <td class="px-4 py-3.5 text-gray-700">${ptw.supervisor}</td>
+                        <td class="px-4 py-3.5">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${
                                 ptw.status === 'Aktif' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' :
                                 ptw.status === 'Pending' ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-sky-100 text-sky-800 border border-sky-300'
                             }">${ptw.status}</span>
-                            <button onclick="showPtwQrModal('${ptw.no}')" class="p-2 rounded-xl bg-orange-100 hover:bg-orange-200 text-[#f24d1a] transition" title="Lihat QR Code">
-                                <i class="fa-solid fa-qrcode text-base"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 text-xs mb-6">
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Jenis Pekerjaan</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.type}</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Pelaksana / Kontraktor</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.contractor}</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Lokasi Pekerjaan</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.location}</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Masa Berlaku (Tanggal)</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.expiry}</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Jam Kerja Operasional</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.time}</p>
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                            <span class="text-[10px] text-gray-400 font-bold uppercase block">Supervisor Lapangan</span>
-                            <p class="font-bold text-gray-800 mt-1">${ptw.supervisor}</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-xl border border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <div class="text-xs text-gray-500 font-light">
-                            <strong>Aksi Verifikasi Petugas Security / QSHE:</strong> Ubah status kelayakan verifikasi pekerjaan secara langsung.
-                        </div>
-                        <div class="flex flex-wrap gap-2 w-full sm:w-auto">
-                            ${ptw.status === 'Pending' ? `
-                                <button onclick="verifyPtwStatus('${ptw.no}', 'Aktif'); handlePtwScanResult('${ptw.no}');" class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition shadow-sm">
-                                    <i class="fa-solid fa-check mr-1"></i> Verifikasi & Izinkan Kerja
+                        </td>
+                        <td class="px-4 py-3.5 text-right">
+                            <div class="flex items-center justify-end gap-1.5">
+                                ${ptw.status === 'Pending' ? `
+                                    <button onclick="verifyPtwStatus('${ptw.no}', 'Aktif'); handlePtwScanResult('${ptw.no}');" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] transition shadow-sm flex items-center gap-1">
+                                        <i class="fa-solid fa-check"></i> Verifikasi
+                                    </button>
+                                ` : ''}
+                                ${ptw.status === 'Aktif' ? `
+                                    <button onclick="verifyPtwStatus('${ptw.no}', 'Selesai'); handlePtwScanResult('${ptw.no}');" class="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold text-[10px] transition shadow-sm flex items-center gap-1">
+                                        <i class="fa-solid fa-circle-check"></i> Selesai
+                                    </button>
+                                ` : ''}
+                                <button onclick="showPtwQrModal('${ptw.no}')" class="p-1.5 rounded-lg bg-orange-100 hover:bg-orange-200 text-[#f24d1a] transition" title="Lihat QR Code">
+                                    <i class="fa-solid fa-qrcode text-xs"></i>
                                 </button>
-                            ` : ''}
-                            ${ptw.status === 'Aktif' ? `
-                                <button onclick="verifyPtwStatus('${ptw.no}', 'Selesai'); handlePtwScanResult('${ptw.no}');" class="flex-1 sm:flex-none px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs transition shadow-sm">
-                                    <i class="fa-solid fa-circle-check mr-1"></i> Tandai Selesai (Closed)
+                                <button onclick="resetPtwScan()" class="p-1.5 rounded-lg border border-gray-200 hover:bg-gray-100 text-gray-500 transition" title="Sembunyikan / Reset">
+                                    <i class="fa-solid fa-xmark text-xs"></i>
                                 </button>
-                            ` : ''}
-                            <button onclick="resetPtwScan()" class="flex-1 sm:flex-none px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-100 text-gray-700 font-bold text-xs transition">
-                                Selesai & Tutup Detail
-                            </button>
-                        </div>
-                    </div>
+                            </div>
+                        </td>
+                    </tr>
                 `;
-                resultContainer.classList.remove('hidden');
-                showToast(`Data PTW ${ptw.no} berhasil dimuat.`, "success");
+                showToast(`Data PTW ${ptw.no} terverifikasi & berhasil ditampilkan.`, "success");
             }
         }
 
         function resetPtwScan() {
-            document.getElementById('ptwScannedResultContainer')?.classList.add('hidden');
-            document.getElementById('ptwScanPromptState')?.classList.remove('hidden');
-            const manualInput = document.getElementById('ptwManualInput');
-            if (manualInput) manualInput.value = '';
-        }
-
-        function showPtwDetailModal(no) {
-            handlePtwScanResult(no);
+            const tbody = document.getElementById('ptwTableBody');
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="px-4 py-12 text-center text-gray-400 bg-orange-50/20">
+                            <div class="flex flex-col items-center justify-center gap-2">
+                                <div class="h-12 w-12 rounded-2xl bg-orange-100 text-[#f24d1a] flex items-center justify-center text-xl shadow-inner">
+                                    <i class="fa-solid fa-qrcode"></i>
+                                </div>
+                                <p class="font-bold text-gray-700 text-xs">Data PTW Disembunyikan</p>
+                                <p class="text-[11px] text-gray-400 max-w-sm">Silakan gunakan menu <strong>Pindai QR Code</strong> atau masukkan <strong>No. PTW</strong> pada menu di atas untuk menampilkan data.</p>
+                                <div class="flex gap-2 mt-1 text-[10px]">
+                                    <span class="text-gray-400 font-medium">Contoh Demo:</span>
+                                    <button onclick="handlePtwScanResult('PTW-2026-001')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-001</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-002')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-002</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-003')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-003</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+            const headerInput = document.getElementById('ptwHeaderSearchInput');
+            if (headerInput) headerInput.value = '';
         }
 
         function showPtwQrModal(no) {
@@ -2027,12 +2103,22 @@ function processAction(action, data) {
 
             const tabs = ['dashboard', 'qshe', 'security', 'apar'];
             tabs.forEach(tab => {
+                // Desktop nav buttons
                 const btn = document.getElementById(`btn-tab-${tab}`);
                 if (btn) {
                     if (tab === tabName) {
                         btn.className = "flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 bg-white/20 border border-white/10 text-white";
                     } else {
                         btn.className = "flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10";
+                    }
+                }
+                // Mobile bottom nav buttons
+                const bnav = document.getElementById(`bnav-${tab}`);
+                if (bnav) {
+                    if (tab === tabName) {
+                        bnav.className = "flex-1 flex flex-col items-center py-1 text-orange-600";
+                    } else {
+                        bnav.className = "flex-1 flex flex-col items-center py-1 text-gray-400";
                     }
                 }
             });
@@ -2058,6 +2144,7 @@ function processAction(action, data) {
             }
 
             renderAll();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function switchSubTab(subTabName) {
@@ -2071,9 +2158,28 @@ function processAction(action, data) {
                 const btn = document.getElementById(`subbtn-${s}`);
                 if (btn) {
                     if (s === subTabName) {
-                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md";
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md flex items-center justify-center gap-2";
                     } else {
-                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-500 hover:bg-gray-50 hover:text-gray-900";
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2";
+                    }
+                }
+            });
+        }
+
+        function switchCompetencySubTab(compTab) {
+            state.activeCompSubTab = compTab;
+            document.querySelectorAll('.comp-panel').forEach(p => p.classList.add('hidden'));
+            const target = document.getElementById(`comp-panel-${compTab}`);
+            if (target) target.classList.remove('hidden');
+
+            const tabs = ['matrix', 'personnel', 'job', 'skills'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`compbtn-${t}`);
+                if (btn) {
+                    if (t === compTab) {
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-white text-gray-800 shadow-sm flex items-center justify-center gap-2";
+                    } else {
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2";
                     }
                 }
             });
@@ -2102,6 +2208,7 @@ function processAction(action, data) {
             renderVmsList();
             renderAparSchedules();
             updateKpiCounts();
+            resetPtwScan();
         }
 
         function renderSkillMatrix() {
@@ -2144,7 +2251,7 @@ function processAction(action, data) {
                         <p class="font-bold text-gray-800">${p.no} - ${p.contractor}</p>
                         <p class="text-[10px] text-gray-400 mt-0.5">${p.type} • ${p.location}</p>
                     </div>
-                    <button onclick="switchTab('security'); switchSubTab('ptw'); showPtwDetailModal('${p.no}')" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] transition shadow-sm">
+                    <button onclick="switchTab('security'); switchSubTab('ptw'); handlePtwScanResult('${p.no}')" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[10px] transition shadow-sm">
                         Verifikasi
                     </button>
                 </div>
@@ -2263,21 +2370,21 @@ function processAction(action, data) {
             if (query) list = list.filter(p => p.name.toLowerCase().includes(query) || p.role.toLowerCase().includes(query));
 
             container.innerHTML = list.map(p => `
-                <div class="bg-gray-50/50 rounded-2xl p-5 border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        <img src="${p.img}" alt="${p.name}" class="h-12 w-12 rounded-full object-cover border-2 border-orange-200">
+                <div class="bg-gray-50/50 rounded-2xl p-4 sm:p-5 border border-gray-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 sm:gap-4">
+                        <img src="${p.img}" alt="${p.name}" class="h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border-2 border-orange-200 shrink-0">
                         <div>
                             <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wide">${p.name}</h4>
                             <p class="text-[10px] text-gray-400 font-medium">${p.role}</p>
                         </div>
                     </div>
-                    <div class="flex flex-wrap gap-1.5 max-w-lg">
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.basic ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Basic Security</span>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.fire ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Fire Emergency</span>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.aid ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">First Aid / P3K</span>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.crowd ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Crowd Control</span>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.cctv ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">CCTV Monitor</span>
-                        <span class="px-2.5 py-1 rounded-lg text-[10px] font-bold ${p.skills.driving ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Defensive Driving</span>
+                    <div class="flex flex-wrap gap-1 sm:gap-1.5 max-w-lg">
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.basic ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Basic Security</span>
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.fire ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Fire Emergency</span>
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.aid ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">First Aid / P3K</span>
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.crowd ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Crowd Control</span>
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.cctv ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">CCTV Monitor</span>
+                        <span class="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg text-[9px] sm:text-[10px] font-bold ${p.skills.driving ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-gray-100 text-gray-400'}">Defensive Driving</span>
                     </div>
                 </div>
             `).join('');
