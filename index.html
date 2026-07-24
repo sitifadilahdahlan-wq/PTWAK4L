@@ -107,7 +107,7 @@
     <div id="dashboardApp" class="flex flex-col min-h-screen">
         
         <!-- HEADER PANEL WITH BRANDING AND NAVIGATION -->
-        <header class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-lg relative pb-28 md:pb-32">
+        <header class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-lg relative pb-8 sm:pb-10">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Top Header Bar -->
                 <div class="flex items-center justify-between h-20 md:h-24 border-b border-white/10">
@@ -119,58 +119,53 @@
                              onerror="this.src='https://placehold.co/200x60/f24d1a/ffffff?text=LRT+JAKARTA'">
                     </div>
 
-                    <!-- Navigation Bar with Dropdowns (Desktop View) -->
-                    <nav class="hidden md:flex items-center gap-2 relative">
-                        <!-- Dashboard Button -->
-                        <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" 
-                                class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 bg-white/20 border border-white/10 text-white">
-                            <i class="fa-solid fa-house"></i> Dashboard
+                    <!-- PC & Tablet Full Navigation Bar (Visible on Tablet & PC: md and lg screens) -->
+                    <nav class="hidden md:flex items-center gap-1 sm:gap-2 relative">
+                        <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 bg-white/20 border border-white/10 text-white">
+                            <i class="fa-solid fa-house text-xs"></i> Dashboard
                         </button>
 
                         <!-- QSHE Dropdown -->
-                        <div class="relative group" id="nav-dropdown-qshe">
-                            <button onclick="switchTab('qshe')" id="btn-tab-qshe" 
-                                    class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
-                                <i class="fa-solid fa-heart-pulse"></i> QSHE <i class="fa-solid fa-chevron-down text-[8px] opacity-75"></i>
+                        <div class="relative group">
+                            <button onclick="switchTab('qshe')" id="btn-tab-qshe" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
+                                <i class="fa-solid fa-heart-pulse text-xs"></i> QSHE <i class="fa-solid fa-chevron-down text-[9px] opacity-70"></i>
                             </button>
-                            <div class="absolute left-0 top-full mt-1 w-64 bg-white rounded-xl shadow-xl py-2 text-gray-800 border border-gray-100 z-50 hidden group-hover:block hover:block animate-in fade-in slide-in-from-top-2 duration-150">
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('hazard')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Temuan Bahaya KTA/TTA</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Safety Key Metric</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('rikes')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Laporan Rikes & NAPZA</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('medical')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Laporan Medical Onsite</button>
+                            <div class="hidden group-hover:block absolute left-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95 duration-150">
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('hazard')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-amber-500 text-xs"></i> Temuan Bahaya KTA/TTA</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-500 text-xs"></i> Safety Key Metrics</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('rikes')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-file-excel text-blue-500 text-xs"></i> Laporan Rikes & NAPZA</button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('medical')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-notes-medical text-rose-500 text-xs"></i> Laporan Medical Onsite</button>
                             </div>
                         </div>
 
                         <!-- Security Dropdown -->
-                        <div class="relative group" id="nav-dropdown-security">
-                            <button onclick="switchTab('security')" id="btn-tab-security" 
-                                    class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
-                                <i class="fa-solid fa-shield-halved"></i> Security <i class="fa-solid fa-chevron-down text-[8px] opacity-75"></i>
+                        <div class="relative group">
+                            <button onclick="switchTab('security')" id="btn-tab-security" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
+                                <i class="fa-solid fa-shield-halved text-xs"></i> Security <i class="fa-solid fa-chevron-down text-[9px] opacity-70"></i>
                             </button>
-                            <div class="absolute left-0 top-full mt-1 w-64 bg-white rounded-xl shadow-xl py-2 text-gray-800 border border-gray-100 z-50 hidden group-hover:block hover:block animate-in fade-in slide-in-from-top-2 duration-150">
-                                <button onclick="switchTab('security'); switchSubTab('metrics')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Matriks Security</button>
-                                <button onclick="switchTab('security'); switchSubTab('reports')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Laporan BUJP</button>
-                                <button onclick="switchTab('security'); switchSubTab('competency')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Kompetensi Personil</button>
-                                <button onclick="switchTab('security'); switchSubTab('vms')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Visitor Management</button>
-                                <button onclick="switchTab('security'); switchSubTab('ptw')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">E-Cek PTW</button>
+                            <div class="hidden group-hover:block absolute left-0 mt-1 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95 duration-150">
+                                <button onclick="switchTab('security'); switchSubTab('metrics')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-chart-pie text-sky-500 text-xs"></i> Matriks Security</button>
+                                <button onclick="switchTab('security'); switchSubTab('reports')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-folder-open text-amber-500 text-xs"></i> Laporan BUJP</button>
+                                <button onclick="switchTab('security'); switchSubTab('competency')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-id-card-clip text-purple-500 text-xs"></i> Kompetensi Personil</button>
+                                <button onclick="switchTab('security'); switchSubTab('vms')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-user-check text-emerald-500 text-xs"></i> Visitor Management (VMS)</button>
+                                <button onclick="switchTab('security'); switchSubTab('ptw')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-file-signature text-orange-500 text-xs"></i> E-Cek PTW</button>
                             </div>
                         </div>
 
                         <!-- APAR Dropdown -->
-                        <div class="relative group" id="nav-dropdown-apar">
-                            <button onclick="switchTab('apar')" id="btn-tab-apar" 
-                                    class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
-                                <i class="fa-solid fa-fire-extinguisher"></i> APAR & Hydrant <i class="fa-solid fa-chevron-down text-[8px] opacity-75"></i>
+                        <div class="relative group">
+                            <button onclick="switchTab('apar')" id="btn-tab-apar" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10">
+                                <i class="fa-solid fa-fire-extinguisher text-xs"></i> APAR & Hydrant <i class="fa-solid fa-chevron-down text-[9px] opacity-70"></i>
                             </button>
-                            <div class="absolute left-0 top-full mt-1 w-64 bg-white rounded-xl shadow-xl py-2 text-gray-800 border border-gray-100 z-50 hidden group-hover:block hover:block animate-in fade-in slide-in-from-top-2 duration-150">
-                                <button onclick="switchTab('apar'); switchAparSubTab('dashboard')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Dashboard APAR</button>
-                                <button onclick="switchTab('apar'); switchAparSubTab('list')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Daftar Alat</button>
-                                <button onclick="switchTab('apar'); switchAparSubTab('schedule')" class="w-full text-left px-4 py-2.5 text-xs text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium">Jadwal & Cetak</button>
+                            <div class="hidden group-hover:block absolute left-0 mt-1 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800 animate-in fade-in zoom-in-95 duration-150">
+                                <button onclick="switchTab('apar'); switchAparSubTab('dashboard')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-gauge text-amber-500 text-xs"></i> Dashboard APAR</button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('list')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-cube text-red-500 text-xs"></i> Daftar Alat APAR</button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('schedule')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-calendar-check text-sky-500 text-xs"></i> Jadwal & Cetak</button>
                             </div>
                         </div>
                     </nav>
 
-                    <!-- User Actions Profile Menu & Mobile Menu Button -->
+                    <!-- User Profile & Notifications Bar -->
                     <div class="flex items-center gap-2 sm:gap-3">
                         <button onclick="openQrScannerModal()" class="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-xl transition text-white" title="Pindai QR Code">
                             <i class="fa-solid fa-qrcode text-base"></i>
@@ -186,7 +181,7 @@
                                 <div class="bg-white/20 h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center">
                                     <i class="fa-regular fa-user text-[10px] sm:text-[11px]"></i>
                                 </div>
-                                <span class="hidden sm:inline text-white" id="userPillLabel">BUJP Security</span>
+                                <span class="hidden sm:inline text-white" id="userPillLabel">Badan Usaha Jasa Pengamanan (BUJP)</span>
                                 <i class="fa-solid fa-chevron-down text-[9px] sm:text-[10px] opacity-80"></i>
                             </button>
                             <div id="userMenuContent" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800">
@@ -202,66 +197,114 @@
                             </div>
                         </div>
 
-                        <!-- Mobile Hamburger Toggle Button -->
-                        <button onclick="toggleMobileMenu()" class="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-xl transition text-white">
+                        <!-- Mobile 3-Lines (Hamburger) Toggle Button (Only visible on mobile: < md) -->
+                        <button onclick="toggleMobileMenu()" class="md:hidden flex items-center gap-1.5 p-2 bg-white/20 border border-white/30 hover:bg-white/30 rounded-xl transition text-white shadow-sm" title="Menu Navigasi Mobile">
                             <i class="fa-solid fa-bars text-lg" id="mobileMenuIcon"></i>
+                            <span class="text-[10px] font-bold tracking-wider uppercase">Menu</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Mobile Slide Drawer Navigation Menu -->
-                <div id="mobileDrawerMenu" class="hidden md:hidden bg-white text-gray-800 rounded-2xl mt-3 p-4 shadow-2xl border border-orange-100 animate-in slide-in-from-top duration-200">
+                <!-- Mobile Slide Drawer Navigation Menu (Dashboard, QSHE, Security, APAR) -->
+                <div id="mobileDrawerMenu" class="hidden md:hidden bg-white text-gray-800 rounded-3xl mt-3 p-4 shadow-2xl border border-orange-100 animate-in slide-in-from-top duration-200">
+                    <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-3 px-1">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-gray-400">Navigasi Utama Portal</span>
+                        <span class="text-[10px] bg-orange-100 text-lrtOrange-600 px-2 py-0.5 rounded-full font-bold">LRT Jakarta</span>
+                    </div>
                     <div class="space-y-2">
-                        <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-3 rounded-xl font-bold text-xs bg-orange-50 text-orange-600 flex items-center gap-2">
-                            <i class="fa-solid fa-house"></i> Dashboard Utama
+                        <!-- Menu 1: Dashboard -->
+                        <button onclick="switchTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-3 rounded-2xl font-bold text-xs bg-gradient-to-r from-orange-50 to-orange-100/50 text-lrtOrange-600 flex items-center justify-between border border-orange-200/50 shadow-sm">
+                            <span class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-house text-sm"></i> Dashboard Utama
+                            </span>
+                            <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
                         </button>
 
-                        <div>
-                            <button onclick="toggleMobileSubmenu('mQsheSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
-                                <span><i class="fa-solid fa-heart-pulse text-red-500 mr-2"></i> Modul QSHE</span>
-                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                            </button>
-                            <div id="mQsheSub" class="hidden pl-6 space-y-1 py-1">
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('hazard'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Temuan Bahaya KTA/TTA</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Safety Key Metrics</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('rikes'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan Rikes & NAPZA</button>
-                                <button onclick="switchTab('qshe'); switchQsheSubTab('medical'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan Medical Onsite</button>
+                        <!-- Menu 2: QSHE -->
+                        <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
+                            <div class="flex items-center justify-between p-3">
+                                <button onclick="switchTab('qshe'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
+                                    <i class="fa-solid fa-heart-pulse text-red-500 text-sm"></i> Modul QSHE
+                                </button>
+                                <button onclick="toggleMobileSubmenu('mQsheSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
+                                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </button>
+                            </div>
+                            <div id="mQsheSub" class="hidden pl-8 pr-3 pb-2 space-y-1 text-xs border-t border-gray-100 bg-white pt-2">
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('hazard'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-500 text-[10px]"></i> Temuan Bahaya KTA/TTA
+                                </button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-line text-emerald-500 text-[10px]"></i> Safety Key Metrics
+                                </button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('rikes'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-file-excel text-blue-500 text-[10px]"></i> Laporan Rikes & NAPZA
+                                </button>
+                                <button onclick="switchTab('qshe'); switchQsheSubTab('medical'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-notes-medical text-rose-500 text-[10px]"></i> Laporan Medical Onsite
+                                </button>
                             </div>
                         </div>
 
-                        <div>
-                            <button onclick="toggleMobileSubmenu('mSecSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
-                                <span><i class="fa-solid fa-shield-halved text-sky-600 mr-2"></i> Modul Security</span>
-                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                            </button>
-                            <div id="mSecSub" class="hidden pl-6 space-y-1 py-1">
-                                <button onclick="switchTab('security'); switchSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Matriks Security</button>
-                                <button onclick="switchTab('security'); switchSubTab('reports'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Laporan BUJP</button>
-                                <button onclick="switchTab('security'); switchSubTab('competency'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Kompetensi Personil</button>
-                                <button onclick="switchTab('security'); switchSubTab('vms'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Visitor Management</button>
-                                <button onclick="switchTab('security'); switchSubTab('ptw'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">E-Cek PTW</button>
+                        <!-- Menu 3: Security -->
+                        <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
+                            <div class="flex items-center justify-between p-3">
+                                <button onclick="switchTab('security'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
+                                    <i class="fa-solid fa-shield-halved text-sky-600 text-sm"></i> Modul Security
+                                </button>
+                                <button onclick="toggleMobileSubmenu('mSecSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
+                                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </button>
+                            </div>
+                            <div id="mSecSub" class="hidden pl-8 pr-3 pb-2 space-y-1 text-xs border-t border-gray-100 bg-white pt-2">
+                                <button onclick="switchTab('security'); switchSubTab('metrics'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-pie text-sky-500 text-[10px]"></i> Matriks Security
+                                </button>
+                                <button onclick="switchTab('security'); switchSubTab('reports'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-folder-open text-amber-500 text-[10px]"></i> Laporan BUJP
+                                </button>
+                                <button onclick="switchTab('security'); switchSubTab('competency'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-id-card-clip text-purple-500 text-[10px]"></i> Kompetensi Personil
+                                </button>
+                                <button onclick="switchTab('security'); switchSubTab('vms'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-user-check text-emerald-500 text-[10px]"></i> Visitor Management (VMS)
+                                </button>
+                                <button onclick="switchTab('security'); switchSubTab('ptw'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-file-signature text-orange-500 text-[10px]"></i> E-Cek PTW
+                                </button>
                             </div>
                         </div>
 
-                        <div>
-                            <button onclick="toggleMobileSubmenu('mAparSub')" class="w-full text-left p-3 rounded-xl font-bold text-xs text-gray-700 hover:bg-gray-50 flex items-center justify-between">
-                                <span><i class="fa-solid fa-fire-extinguisher text-amber-500 mr-2"></i> APAR & Hydrant</span>
-                                <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                            </button>
-                            <div id="mAparSub" class="hidden pl-6 space-y-1 py-1">
-                                <button onclick="switchTab('apar'); switchAparSubTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Dashboard APAR</button>
-                                <button onclick="switchTab('apar'); switchAparSubTab('list'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Daftar Alat APAR</button>
-                                <button onclick="switchTab('apar'); switchAparSubTab('schedule'); toggleMobileMenu()" class="w-full text-left p-2 text-xs text-gray-600 hover:text-orange-600 font-medium">Jadwal & Cetak</button>
+                        <!-- Menu 4: APAR & Hydrant -->
+                        <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
+                            <div class="flex items-center justify-between p-3">
+                                <button onclick="switchTab('apar'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
+                                    <i class="fa-solid fa-fire-extinguisher text-amber-500 text-sm"></i> APAR & Hydrant
+                                </button>
+                                <button onclick="toggleMobileSubmenu('mAparSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
+                                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </button>
+                            </div>
+                            <div id="mAparSub" class="hidden pl-8 pr-3 pb-2 space-y-1 text-xs border-t border-gray-100 bg-white pt-2">
+                                <button onclick="switchTab('apar'); switchAparSubTab('dashboard'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-gauge text-amber-500 text-[10px]"></i> Dashboard APAR
+                                </button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('list'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-cube text-red-500 text-[10px]"></i> Daftar Alat APAR
+                                </button>
+                                <button onclick="switchTab('apar'); switchAparSubTab('schedule'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
+                                    <i class="fa-solid fa-calendar-check text-sky-500 text-[10px]"></i> Jadwal & Cetak
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Hero Title Header Area -->
-                <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+                <div class="pt-2 sm:pt-3 pb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                     <div>
-                        <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white" id="mainHeaderTitle">Dashboard</h2>
-                        <p class="text-[11px] sm:text-xs text-white/80 mt-0.5 sm:mt-1 font-light" id="mainHeaderSubtitle">Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan</p>
+                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white" id="mainHeaderTitle">Dashboard</h2>
+                        <p class="text-[11px] sm:text-xs text-white/80 mt-0.5 font-light" id="mainHeaderSubtitle">Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan</p>
                     </div>
                     <div class="flex items-center gap-2 self-start sm:self-auto text-[11px] sm:text-xs text-white/90 bg-white/10 px-3 py-1 rounded-full md:bg-transparent md:p-0" id="headerRightArea">
                         <i class="fa-regular fa-clock"></i>
@@ -272,16 +315,19 @@
         </header>
 
         <!-- MAIN APP BODY -->
-        <main class="relative z-20 flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 -mt-16 sm:-mt-20 pb-24 md:pb-16">
+        <main class="relative z-20 flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 -mt-2 sm:-mt-3 pb-20 md:pb-12">
             
             <!-- TAB 1: DASHBOARD VIEW -->
-            <div id="tabView-dashboard" class="tab-view flex flex-col gap-5">
+            <div id="tabView-dashboard" class="tab-view flex flex-col gap-4">
                 
                 <!-- AKSES CEPAT SECTION -->
-                <div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-                        <div onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-emerald-200 transition cursor-pointer flex items-center gap-3.5">
-                            <div class="bg-emerald-50 text-emerald-500 p-2.5 rounded-xl shrink-0">
+                <div class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm">
+                    <h4 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-orange-500"></i> Akses Cepat
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div onclick="switchTab('qshe'); switchQsheSubTab('metrics')" class="bg-gray-50/70 hover:bg-emerald-50/50 rounded-2xl border border-gray-100 p-3.5 shadow-sm hover:shadow-md hover:border-emerald-200 transition cursor-pointer flex items-center gap-3">
+                            <div class="bg-emerald-100/80 text-emerald-600 p-2.5 rounded-xl shrink-0">
                                 <i class="fa-solid fa-heart-pulse text-sm"></i>
                             </div>
                             <div>
@@ -290,8 +336,8 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('metrics')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-sky-200 transition cursor-pointer flex items-center gap-3.5">
-                            <div class="bg-sky-50 text-sky-500 p-2.5 rounded-xl shrink-0">
+                        <div onclick="switchTab('security'); switchSubTab('metrics')" class="bg-gray-50/70 hover:bg-sky-50/50 rounded-2xl border border-gray-100 p-3.5 shadow-sm hover:shadow-md hover:border-sky-200 transition cursor-pointer flex items-center gap-3">
+                            <div class="bg-sky-100/80 text-sky-600 p-2.5 rounded-xl shrink-0">
                                 <i class="fa-solid fa-shield-halved text-sm"></i>
                             </div>
                             <div>
@@ -300,8 +346,8 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('vms')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-purple-200 transition cursor-pointer flex items-center gap-3.5">
-                            <div class="bg-purple-50 text-purple-500 p-2.5 rounded-xl shrink-0">
+                        <div onclick="switchTab('security'); switchSubTab('vms')" class="bg-gray-50/70 hover:bg-purple-50/50 rounded-2xl border border-gray-100 p-3.5 shadow-sm hover:shadow-md hover:border-purple-200 transition cursor-pointer flex items-center gap-3">
+                            <div class="bg-purple-100/80 text-purple-600 p-2.5 rounded-xl shrink-0">
                                 <i class="fa-solid fa-user-check text-sm"></i>
                             </div>
                             <div>
@@ -310,8 +356,8 @@
                             </div>
                         </div>
 
-                        <div onclick="switchTab('security'); switchSubTab('reports')" class="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:border-amber-200 transition cursor-pointer flex items-center gap-3.5">
-                            <div class="bg-amber-50 text-amber-500 p-2.5 rounded-xl shrink-0">
+                        <div onclick="switchTab('security'); switchSubTab('reports')" class="bg-gray-50/70 hover:bg-amber-50/50 rounded-2xl border border-gray-100 p-3.5 shadow-sm hover:shadow-md hover:border-amber-200 transition cursor-pointer flex items-center gap-3">
+                            <div class="bg-amber-100/80 text-amber-600 p-2.5 rounded-xl shrink-0">
                                 <i class="fa-solid fa-file-invoice text-sm"></i>
                             </div>
                             <div>
@@ -323,7 +369,7 @@
                 </div>
 
                 <!-- COMPETENCE MATRIX & EXPIRATIONS -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <div class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm lg:col-span-2">
                         <div class="flex justify-between items-start mb-2">
                             <div>
@@ -987,26 +1033,26 @@
 
                 <!-- SUB-VIEW 3: MATRIKS KOMPETENSI PERSONEL -->
                 <div id="subview-competency" class="security-subview hidden flex flex-col gap-6">
-                    <!-- COMPETENCY SECONDARY SUB-NAV (NEW SCREENSHOT 2 LAYOUT) -->
-                    <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] p-2.5 rounded-2xl shadow-md">
-                        <div class="bg-gray-100/80 rounded-2xl p-1.5 flex flex-wrap sm:flex-nowrap gap-1 shadow-inner">
-                            <button onclick="switchCompetencySubTab('matrix')" id="compbtn-matrix" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-white text-gray-800 shadow-sm flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-shield-halved text-gray-700"></i> Matriks Kompetensi
+                    <!-- COMPETENCY SECONDARY SUB-NAV MATCHING SCREENSHOT -->
+                    <div class="bg-white/10 backdrop-blur-md p-1.5 rounded-2xl border border-white/20 shadow-md">
+                        <div class="bg-white rounded-xl p-1 flex flex-wrap sm:flex-nowrap gap-1 shadow-sm border border-gray-100">
+                            <button onclick="switchCompetencySubTab('matrix')" id="compbtn-matrix" class="flex-1 py-2 px-3 text-center rounded-lg text-xs font-medium tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-xs text-gray-500"></i> Matriks Kompetensi
                             </button>
-                            <button onclick="switchCompetencySubTab('personnel')" id="compbtn-personnel" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-users"></i> Manajemen Personel
+                            <button onclick="switchCompetencySubTab('personnel')" id="compbtn-personnel" class="flex-1 py-2 px-3 text-center rounded-lg text-xs font-medium tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-users text-xs text-gray-500"></i> Manajemen Personel
                             </button>
-                            <button onclick="switchCompetencySubTab('job')" id="compbtn-job" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-briefcase"></i> Manajemen Jabatan
+                            <button onclick="switchCompetencySubTab('job')" id="compbtn-job" class="flex-1 py-2 px-3 text-center rounded-lg text-xs font-medium tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-briefcase text-xs text-gray-500"></i> Manajemen Jabatan
                             </button>
-                            <button onclick="switchCompetencySubTab('skills')" id="compbtn-skills" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-file-lines"></i> Manajemen Keahlian
+                            <button onclick="switchCompetencySubTab('skills')" id="compbtn-skills" class="flex-1 py-2 px-3 text-center rounded-lg text-xs font-semibold tracking-tight transition duration-150 bg-white text-gray-900 shadow-sm border border-gray-200 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-file-lines text-xs text-gray-700"></i> Manajemen Keahlian
                             </button>
                         </div>
                     </div>
 
                     <!-- COMPETENCY TAB CONTENT PANELS -->
-                    <div id="comp-panel-matrix" class="comp-panel bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <div id="comp-panel-matrix" class="comp-panel hidden bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                             <div>
                                 <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
@@ -1048,14 +1094,63 @@
                         <div class="text-xs text-gray-500 font-light">Struktur jabatan operational BUJP Security LRT Jakarta.</div>
                     </div>
 
-                    <div id="comp-panel-skills" class="comp-panel hidden bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                        <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                    <!-- MANAJEMEN KEAHLIAN PANEL (EXACT MATCH TO SCREENSHOT) -->
+                    <div id="comp-panel-skills" class="comp-panel bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-sm">
+                        <!-- Top Header: Title & Subtitle Left, Search Right -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                             <div>
-                                <h3 class="text-base font-bold text-gray-800"><i class="fa-solid fa-file-lines text-[#f24d1a] mr-2"></i> Manajemen Keahlian & Sertifikasi</h3>
-                                <p class="text-xs text-gray-400 mt-0.5">Kategori pelatihan wajib, Gada Pratama, Gada Madya, P3K, Damkar</p>
+                                <h3 class="text-lg font-bold text-gray-900 tracking-tight">Keahlian</h3>
+                                <p class="text-xs text-gray-400 mt-0.5 font-normal">Kelola jenis kompetensi dan sertifikasi yang dibutuhkan.</p>
+                            </div>
+                            <div class="relative w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 text-xs">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </span>
+                                <input type="text" id="skillsSearchInput" oninput="filterSkillsTable()" placeholder="Cari..." class="w-full pl-9 pr-3 py-2 rounded-xl border border-gray-200 text-xs bg-gray-50/60 focus:bg-white focus:outline-none focus:ring-1 focus:ring-lrtOrange-500 transition">
                             </div>
                         </div>
-                        <div class="text-xs text-gray-500 font-light">Katalog sertifikasi standar operasional keselamatan dan keamanan.</div>
+
+                        <!-- Skills Table Container -->
+                        <div class="overflow-x-auto rounded-xl border border-gray-100">
+                            <table class="min-w-full text-left text-xs divide-y divide-gray-100">
+                                <thead class="bg-gray-50/80 text-gray-400 font-semibold uppercase tracking-wider">
+                                    <tr>
+                                        <th class="px-6 py-3.5 text-[11px]">NAMA KEAHLIAN</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="skillsTableBody" class="divide-y divide-gray-100 bg-white text-gray-800">
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">Basic Security Training</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">Handling Fire Emergency</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">First Aid / P3K</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">Crowd Control</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">CCTV Monitoring</td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50/50 transition">
+                                        <td class="px-6 py-4 font-normal text-gray-800">Defensive Driving</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination Footer -->
+                        <div class="flex items-center justify-end gap-3 mt-6 pt-2 text-xs">
+                            <button onclick="showToast('Anda berada di halaman pertama', 'info')" class="px-3.5 py-1.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-400 font-medium cursor-not-allowed flex items-center gap-1.5 text-[11px]">
+                                <i class="fa-solid fa-chevron-left text-[9px]"></i> Previous
+                            </button>
+                            <span class="text-gray-500 font-medium text-[11px]">Page 1 of 2</span>
+                            <button onclick="showToast('Menampilkan Halaman 2', 'info')" class="px-3.5 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 font-medium transition flex items-center gap-1.5 text-[11px] shadow-sm">
+                                Next <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -2164,6 +2259,14 @@ function processAction(action, data) {
                     }
                 }
             });
+
+            if (subTabName === 'competency') {
+                const titleEl = document.getElementById('mainHeaderTitle');
+                const subTitleEl = document.getElementById('mainHeaderSubtitle');
+                if (titleEl) titleEl.innerText = "Manajemen Kompetensi Security";
+                if (subTitleEl) subTitleEl.innerText = "Sistem Pengelolaan Sertifikasi, Kualifikasi & Keahlian Personel Security";
+                switchCompetencySubTab(state.activeCompSubTab || 'skills');
+            }
         }
 
         function switchCompetencySubTab(compTab) {
@@ -2177,10 +2280,23 @@ function processAction(action, data) {
                 const btn = document.getElementById(`compbtn-${t}`);
                 if (btn) {
                     if (t === compTab) {
-                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-white text-gray-800 shadow-sm flex items-center justify-center gap-2";
+                        btn.className = "flex-1 py-2 px-3 text-center rounded-lg text-xs font-semibold tracking-tight transition duration-150 bg-white text-gray-900 shadow-sm border border-gray-200 flex items-center justify-center gap-2";
                     } else {
-                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-semibold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-white/60 flex items-center justify-center gap-2";
+                        btn.className = "flex-1 py-2 px-3 text-center rounded-lg text-xs font-medium tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2";
                     }
+                }
+            });
+        }
+
+        function filterSkillsTable() {
+            const query = (document.getElementById('skillsSearchInput')?.value || '').toLowerCase();
+            const rows = document.querySelectorAll('#skillsTableBody tr');
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
                 }
             });
         }
