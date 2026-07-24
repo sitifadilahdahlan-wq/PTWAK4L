@@ -148,7 +148,7 @@
                                 <button onclick="switchTab('security'); switchSubTab('reports')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-folder-open text-amber-500 text-xs"></i> Laporan BUJP</button>
                                 <button onclick="switchTab('security'); switchSubTab('competency')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-id-card-clip text-purple-500 text-xs"></i> Kompetensi Personil</button>
                                 <button onclick="switchTab('security'); switchSubTab('vms')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-user-check text-emerald-500 text-xs"></i> Visitor Management (VMS)</button>
-                                <button onclick="switchTab('security'); switchSubTab('ptw')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-file-signature text-orange-500 text-xs"></i> E-PTW</button>
+                                <button onclick="switchTab('security'); switchSubTab('ptw')" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 hover:text-orange-600 font-medium flex items-center gap-2"><i class="fa-solid fa-file-signature text-orange-500 text-xs"></i> E-Cek PTW</button>
                             </div>
                         </div>
 
@@ -224,7 +224,7 @@
                         <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
                             <div class="flex items-center justify-between p-3">
                                 <button onclick="switchTab('qshe'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
-                                    <i class="fa-solid fa-heart-pulse text-red-500 text-sm"></i> Modul QSHE
+                                    <i class="fa-solid fa-heart-pulse text-red-500 text-sm"></i> Departemen QSHE
                                 </button>
                                 <button onclick="toggleMobileSubmenu('mQsheSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -250,7 +250,7 @@
                         <div class="border border-gray-100 rounded-2xl overflow-hidden bg-gray-50/50">
                             <div class="flex items-center justify-between p-3">
                                 <button onclick="switchTab('security'); toggleMobileMenu()" class="flex-1 text-left font-bold text-xs text-gray-800 flex items-center gap-2.5">
-                                    <i class="fa-solid fa-shield-halved text-sky-600 text-sm"></i> Modul Security
+                                    <i class="fa-solid fa-shield-halved text-sky-600 text-sm"></i> Departemen Security
                                 </button>
                                 <button onclick="toggleMobileSubmenu('mSecSub')" class="p-1.5 text-gray-400 hover:text-gray-700">
                                     <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -270,7 +270,7 @@
                                     <i class="fa-solid fa-user-check text-emerald-500 text-[10px]"></i> Visitor Management (VMS)
                                 </button>
                                 <button onclick="switchTab('security'); switchSubTab('ptw'); toggleMobileMenu()" class="w-full text-left p-2 text-gray-600 hover:text-orange-600 font-medium rounded-lg hover:bg-orange-50 flex items-center gap-2">
-                                    <i class="fa-solid fa-file-signature text-orange-500 text-[10px]"></i> E-PTW
+                                    <i class="fa-solid fa-file-signature text-orange-500 text-[10px]"></i> E-Cek PTW
                                 </button>
                             </div>
                         </div>
@@ -819,7 +819,7 @@
                             <i class="fa-solid fa-user-shield"></i> Visitor Management
                         </button>
                         <button onclick="switchSubTab('ptw')" id="subbtn-ptw" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-signature"></i> E-PTW
+                            <i class="fa-solid fa-file-signature"></i> E-Cek PTW
                         </button>
                     </div>
                 </div>
@@ -1235,7 +1235,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-VIEW 5: E-PTW (PERMIT TO WORK) -->
+                <!-- SUB-VIEW 5: E-CEK PTW (PERMIT TO WORK) -->
                 <div id="subview-ptw" class="security-subview hidden flex flex-col gap-6">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                         <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-start justify-between">
@@ -1682,7 +1682,7 @@ function processAction(action, data) {
         </div>
     </div>
 
-    <!-- NEW E-MODAL -->
+    <!-- NEW E-CEK PTW MODAL -->
     <div id="addPtwModal" class="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 sm:p-4 hidden">
         <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
             <div class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white p-4 sm:p-5 flex justify-between items-center sticky top-0 z-10">
@@ -2023,8 +2023,13 @@ function processAction(action, data) {
                                 <div class="h-12 w-12 rounded-2xl bg-orange-100 text-[#f24d1a] flex items-center justify-center text-xl shadow-inner">
                                     <i class="fa-solid fa-qrcode"></i>
                                 </div>
+                                <p class="font-bold text-gray-700 text-xs">Data PTW Disembunyikan</p>
                                 <p class="text-[11px] text-gray-400 max-w-sm">Silakan gunakan menu <strong>Pindai QR Code</strong> atau masukkan <strong>No. PTW</strong> pada menu di atas untuk menampilkan data.</p>
                                 <div class="flex gap-2 mt-1 text-[10px]">
+                                    <span class="text-gray-400 font-medium">Contoh Demo:</span>
+                                    <button onclick="handlePtwScanResult('PTW-2026-001')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-001</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-002')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-002</button> •
+                                    <button onclick="handlePtwScanResult('PTW-2026-003')" class="text-orange-600 font-mono underline hover:text-orange-700">PTW-2026-003</button>
                                 </div>
                             </div>
                         </td>
@@ -2224,8 +2229,8 @@ function processAction(action, data) {
                 subTitleEl.innerText = "Quality, Safety, Health & Environment Management System";
                 switchQsheSubTab(state.activeQsheSubTab);
             } else if (tabName === 'security') {
-                titleEl.innerText = "Departemen Security";
-                subTitleEl.innerText = "Pengelolaan Sistem Keamanan, BUJP, VMS & E-PTW";
+                titleEl.innerText = "Departemen Keamanan (Security)";
+                subTitleEl.innerText = "Pengelolaan Sistem Keamanan, BUJP, VMS & E-Cek PTW";
                 switchSubTab(state.activeSubTab);
             } else if (tabName === 'apar') {
                 titleEl.innerText = "APAR & Hydrant";
