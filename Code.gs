@@ -1,218 +1,109 @@
 /**
- * AK4L - QSHE & Security Management Portal | LRT Jakarta
- * Backend Integration Script for Google Sheets & Web App Rendering
- * 
- * Petunjuk Deployment:
- * 1. Buka Google Spreadsheet tempat penyimpanan data.
- * 2. Klik menu Ekstensi (Extensions) > Apps Script.
- * 3. Salin seluruh kode ini dan tempelkan di file 'Code.gs'.
- * 4. Buat file HTML baru bernama 'index' (tanpa .html) dan tempelkan kode HTML portal AK4L.
- * 5. Klik "Deploy" > "New deployment" > Pilih Tipe: "Web app".
- * 6. Execute as: "Me" | Who has access: "Anyone".
- * 7. Klik "Deploy" dan jalankan Web App URL yang dihasilkan.
+ * Code.gs - Google Apps Script Backend
+ * AK4L - QSHE & Security Portal | LRT Jakarta
  */
 
-// Global Spreadsheet reference
-function getSpreadsheet() {
-  return SpreadsheetApp.getActiveSpreadsheet();
-}
-
 /**
- * Main HTTP GET handler - Merender tampilan UI HTML Portal AK4L saat Web App dibuka
+ * Menampilkan halaman Web App HTML saat URL dibuka dari browser
  */
 function doGet(e) {
   return HtmlService.createHtmlOutputFromFile('index')
-       .setTitle('AK4L - QSHE & Security Portal | LRT Jakarta')
-       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-       .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+      .setTitle('AK4L - QSHE & Security Portal | LRT Jakarta')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
+      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
 }
 
 /**
- * Main HTTP POST handler - Menerima kiriman data API dari luar
+ * Menerima request POST berisi JSON dari Form Web App (PTW, VMS, Bahaya, Laporan, Jadwal)
  */
 function doPost(e) {
   try {
-    var data = {};
-    
-    // Parse data baik dari payload JSON raw maupun url-encoded form parameter
-    if (e && e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (jsonErr) {
-        data = e.parameter || {};
-      }
-    } else if (e && e.parameter) {
-      data = e.parameter;
-    }
-
-    if (!data.action) {
-      return responseJSON({ status: "error", message: "Parameter 'action' tidak ditemukan." });
-    }
-
+    var data = JSON.parse(e.postData.contents);
     var result = processAction(data.action, data);
-    return responseJSON(result);
-
+    return ContentService.createTextOutput(JSON.stringify(result))
+      .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
-    return responseJSON({ 
-      status: "error", 
-      message: err.toString() 
-    });
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: 'error', 
+      message: err.message 
+    })).setMimeType(ContentService.MimeType.JSON);
   }
 }
 
 /**
- * Fungsi Pengolah Utama Data (Dapat dipanggil via POST API & google.script.run)
+ * Mengolah aksi dan menyimpan data secara otomatis ke tab Google Sheet yang sesuai.
+ * Membuat tab sheet baru & header otomatis jika sheet belum ada.
  */
 function processAction(action, data) {
-  var ss = getSpreadsheet();
-  var timestamp = new Date();
-
-  switch (action) {
-    case "addHazard":
-      saveHazardData(ss, data, timestamp);
-      break;
-
-    case "addReport":
-      saveReportData(ss, data, timestamp);
-      break;
-
-    case "addVisitor":
-      saveVisitorData(ss, data, timestamp);
-      break;
-
-    case "addPtw":
-      savePtwData(ss, data, timestamp);
-      break;
-
-    case "addSchedule":
-      saveScheduleData(ss, data, timestamp);
-      break;
-
-    default:
-      throw new Error("Action tidak dikenali: " + action);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  // Pemetaan nama sheet berdasarkan jenis aksi form
+  var sheetName = "Log_Portal";
+  if (action === "addHazard") sheetName = "KTA_TTA_Hazards";
+  else if (action === "addReport") sheetName = "Laporan_BUJP";
+  else if (action === "addVisitor") sheetName = "Visitor_VMS";
+  else if (action === "addPtw") sheetName = "Permit_To_Work_PTW";
+  else if (action === "addSchedule") sheetName = "Jadwal_APAR_Hydrant";
+  
+  var sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
   }
-
-  return {
-    status: "success",
-    message: "Data berhasil disimpan ke Google Sheets",
-    action: action,
-    timestamp: timestamp.toISOString()
+  
+  // Buat baris Header jika sheet masih kosong
+  if (sheet.getLastRow() === 0) {
+    var headers = ['Waktu_Input'];
+    for (var key in data) {
+      if (key !== 'action') {
+        headers.push(key);
+      }
+    }
+    sheet.appendRow(headers);
+    
+    // Format Header dengan warna khas LRT Jakarta (Orange)
+    var headerRange = sheet.getRange(1, 1, 1, headers.length);
+    headerRange.setBackground("#f24d1a")
+               .setFontColor("#ffffff")
+               .setFontWeight("bold");
+  }
+  
+  // Susun baris data baru
+  var row = [new Date()];
+  for (var k in data) {
+    if (k !== 'action') {
+      row.push(data[k]);
+    }
+  }
+  
+  sheet.appendRow(row);
+  
+  return { 
+    status: "success", 
+    action: action, 
+    sheet: sheetName,
+    message: "Data berhasil disimpan ke Google Sheets" 
   };
 }
 
 /**
- * Menyimpan data Permit to Work (PTW) ke tab 'PTW'
+ * Fungsi pembantu opsional untuk membaca data dari Google Sheets ke portal
  */
-function savePtwData(ss, data, timestamp) {
-  var headers = ["Timestamp", "No PTW", "Jenis Pekerjaan", "Kontraktor / Pelaksana", "Lokasi", "Masa Berlaku", "Jam Kerja", "Supervisor", "Status"];
-  var sheet = getOrCreateSheet(ss, "PTW", headers);
-  
-  sheet.appendRow([
-    timestamp,
-    data.no || "",
-    data.type || "",
-    data.contractor || "",
-    data.location || "",
-    data.expiry || "",
-    data.time || "",
-    data.supervisor || "",
-    data.status || "Pending"
-  ]);
-}
-
-/**
- * Menyimpan temuan Bahaya KTA/TTA ke tab 'Hazards'
- */
-function saveHazardData(ss, data, timestamp) {
-  var headers = ["Timestamp", "ID Temuan", "Judul Temuan", "Lokasi", "Tingkat Bahaya", "Status"];
-  var sheet = getOrCreateSheet(ss, "Hazards", headers);
-
-  sheet.appendRow([
-    timestamp,
-    data.id || "",
-    data.title || "",
-    data.location || "",
-    data.severity || "",
-    data.status || "Open"
-  ]);
-}
-
-/**
- * Menyimpan metadata Laporan BUJP ke tab 'Reports'
- */
-function saveReportData(ss, data, timestamp) {
-  var headers = ["Timestamp", "ID Laporan", "Nama Laporan", "Tanggal Unggah", "Diupload Oleh", "Bulan", "Status"];
-  var sheet = getOrCreateSheet(ss, "Reports", headers);
-
-  sheet.appendRow([
-    timestamp,
-    data.id || "",
-    data.name || "",
-    data.date || "",
-    data.uploadedBy || "",
-    data.month || "",
-    data.status || "Approved"
-  ]);
-}
-
-/**
- * Menyimpan data Pengunjung (Visitor) ke tab 'Visitors'
- */
-function saveVisitorData(ss, data, timestamp) {
-  var headers = ["Timestamp", "Nama Pengunjung", "Instansi / Perusahaan", "Tanggal Kunjungan", "Waktu Kunjungan", "Status"];
-  var sheet = getOrCreateSheet(ss, "Visitors", headers);
-
-  sheet.appendRow([
-    timestamp,
-    data.name || "",
-    data.org || "",
-    data.date || "",
-    data.time || "",
-    data.status || "Approved"
-  ]);
-}
-
-/**
- * Menyimpan Jadwal Inspeksi APAR ke tab 'Schedules'
- */
-function saveScheduleData(ss, data, timestamp) {
-  var headers = ["Timestamp", "Kode Alat", "Lokasi", "Tanggal Jadwal", "Petugas", "Status"];
-  var sheet = getOrCreateSheet(ss, "Schedules", headers);
-
-  sheet.appendRow([
-    timestamp,
-    data.code || "",
-    data.location || "",
-    data.date || "",
-    data.officer || "",
-    data.status || "Scheduled"
-  ]);
-}
-
-/**
- * Helper untuk mengambil tab sheet atau membuatnya jika belum ada
- */
-function getOrCreateSheet(ss, sheetName, headers) {
+function getSheetRecords(sheetName) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
-  if (!sheet) {
-    sheet = ss.insertSheet(sheetName);
-    sheet.appendRow(headers);
-    
-    // Formatting Header berstandar LRT Jakarta
-    var headerRange = sheet.getRange(1, 1, 1, headers.length);
-    headerRange.setBackground("#f24d1a");
-    headerRange.setFontColor("#ffffff");
-    headerRange.setFontWeight("bold");
-    headerRange.setHorizontalAlignment("center");
-    sheet.setFrozenRows(1);
+  if (!sheet || sheet.getLastRow() <= 1) return [];
+  
+  var values = sheet.getDataRange().getValues();
+  var headers = values[0];
+  var results = [];
+  
+  for (var i = 1; i < values.length; i++) {
+    var rowObj = {};
+    for (var j = 0; j < headers.length; j++) {
+      rowObj[headers[j]] = values[i][j];
+    }
+    results.push(rowObj);
   }
-  return sheet;
-}
-
-/**
- * Utility untuk menghasilkan response berformat JSON
- */
-function responseJSON(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj))
-    .setMimeType(ContentService.MimeType.JSON);
+  
+  return results;
 }
