@@ -168,10 +168,6 @@
 
                     <!-- User Profile & Notifications Bar -->
                     <div class="flex items-center gap-2 sm:gap-3">
-                        <button onclick="openQrScannerModal()" class="md:hidden p-2 bg-white/10 hover:bg-white/20 rounded-xl transition text-white" title="Pindai QR Code">
-                            <i class="fa-solid fa-qrcode text-base"></i>
-                        </button>
-
                         <button onclick="showToast('Sistem Keamanan Terpantau Normal & Aman', 'info')" class="relative p-2 hover:bg-white/10 rounded-xl transition duration-150">
                             <span class="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-orange-500"></span>
                             <i class="fa-regular fa-bell text-sm sm:text-base"></i>
@@ -185,30 +181,21 @@
                                 <span class="hidden sm:inline text-white" id="userPillLabel">Badan Usaha Jasa Pengamanan (BUJP)</span>
                                 <i class="fa-solid fa-chevron-down text-[9px] sm:text-[10px] opacity-80"></i>
                             </button>
-                            <div id="userMenuContent" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800">
+                            <div id="userMenuContent" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 text-gray-800">
                                 <div class="px-4 py-2 border-b border-gray-100">
                                     <p class="text-xs font-bold text-gray-900" id="userMenuRoleTitle">Petugas Keamanan (BUJP)</p>
                                     <p class="text-[10px] text-gray-400" id="userMenuEmail">bujp.security@lrtjakarta.co.id</p>
                                 </div>
                                 
-                                <!-- Role Switcher Option -->
-                                <button onclick="toggleUserRole()" class="w-full text-left px-4 py-2 text-xs hover:bg-orange-50 font-medium text-gray-700 flex items-center justify-between border-b border-gray-100">
-                                    <span class="flex items-center gap-2"><i class="fa-solid fa-user-shield text-orange-500"></i> Peran: <strong id="menuRoleName">BUJP Security</strong></span>
-                                    <span class="text-[9px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold">Ubah</span>
+                                <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 font-semibold transition">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Aplikasi
                                 </button>
-
-                                <button onclick="openDatabaseSettingsModal()" class="w-full text-left px-4 py-2 text-xs text-orange-600 hover:bg-orange-50 font-bold flex items-center gap-2"><i class="fa-solid fa-database text-orange-500"></i> Koneksi Google Sheets</button>
-                                <button onclick="openModal('appsScriptModal')" class="w-full text-left px-4 py-2 text-xs text-blue-600 hover:bg-blue-50 font-bold flex items-center gap-2"><i class="fa-solid fa-code text-blue-500"></i> Kode Code.gs Apps Script</button>
-                                
-                                <div class="h-px bg-gray-100 my-1"></div>
-                                <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 font-semibold"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Aplikasi</button>
                             </div>
                         </div>
 
                         <!-- Mobile Toggle Button -->
                         <button onclick="toggleMobileMenu()" class="md:hidden flex items-center gap-1.5 p-2 bg-white/20 border border-white/30 hover:bg-white/30 rounded-xl transition text-white shadow-sm" title="Menu Navigasi Mobile">
                             <i class="fa-solid fa-bars text-lg" id="mobileMenuIcon"></i>
-                            <span class="text-[10px] font-bold tracking-wider uppercase">Menu</span>
                         </button>
                     </div>
                 </div>
@@ -1243,20 +1230,49 @@
                         </div>
 
                         <!-- RIGHT COLUMN: DATA TABLE PERMIT TO WORK -->
-                        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm lg:col-span-2 flex flex-col justify-center items-center min-h-[380px] text-center">
-                            <div class="max-w-md flex flex-col items-center">
-                                <div class="bg-orange-50 text-orange-500 h-20 w-20 rounded-full flex items-center justify-center mb-4 border border-orange-100 shadow-sm">
-                                    <i class="fa-solid fa-qrcode text-3xl"></i>
+                        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm lg:col-span-2 flex flex-col justify-start">
+                            <div class="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
+                                        <i class="fa-solid fa-file-contract text-orange-500"></i> Data Permit to Work (PTW)
+                                    </h3>
+                                    <p class="text-xs text-gray-400 mt-0.5">Hasil pindaian QR Code atau pencarian nomor PTW</p>
                                 </div>
-                                <h3 class="text-base font-bold text-gray-800 mb-2">Data Permit to Work (PTW)</h3>
-                                <div class="bg-orange-50/70 border border-orange-200/80 rounded-2xl px-5 py-4 text-orange-900 shadow-sm">
-                                    <p class="text-xs font-bold leading-relaxed">
-                                        Silahkan Cari data PTW menggunakan QRCode di kertas PTW Vendor
-                                    </p>
-                                </div>
-                                <p class="text-[11px] text-gray-400 mt-3 font-light leading-relaxed">
-                                    Gunakan tombol <span class="font-semibold text-gray-600">Buka Kamera Scanner</span> di panel sebelah kiri atau ketik nomor PTW manual untuk menampilkan detail izin kerja.
-                                </p>
+                            </div>
+
+                            <div class="overflow-x-auto rounded-2xl border border-gray-100">
+                                <table class="min-w-full text-left text-xs divide-y divide-gray-100">
+                                    <thead class="bg-gray-50 text-gray-500 font-bold uppercase tracking-wider">
+                                        <tr>
+                                            <th class="px-4 py-3">No. PTW</th>
+                                            <th class="px-4 py-3">Jenis Pekerjaan</th>
+                                            <th class="px-4 py-3">Pelaksana</th>
+                                            <th class="px-4 py-3">Lokasi</th>
+                                            <th class="px-4 py-3">Berlaku</th>
+                                            <th class="px-4 py-3">Status</th>
+                                            <th class="px-4 py-3 text-right">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ptwSecurityTableBody" class="divide-y divide-gray-50 bg-white text-gray-700">
+                                        <tr>
+                                            <td colspan="7" class="px-4 py-12 text-center bg-gray-50/50">
+                                                <div class="max-w-md mx-auto flex flex-col items-center justify-center text-center">
+                                                    <div class="bg-orange-50 text-orange-500 h-14 w-14 rounded-2xl flex items-center justify-center mb-3 border border-orange-100 shadow-sm">
+                                                        <i class="fa-solid fa-qrcode text-2xl"></i>
+                                                    </div>
+                                                    <div class="bg-orange-50/80 border border-orange-200/80 rounded-xl px-4 py-2.5 text-orange-900 shadow-sm mb-2">
+                                                        <p class="text-xs font-bold leading-relaxed">
+                                                            Silahkan Cari data PTW menggunakan QRCode di kertas PTW Vendor
+                                                        </p>
+                                                    </div>
+                                                    <p class="text-[11px] text-gray-400 font-light leading-relaxed">
+                                                        Gunakan tombol <span class="font-semibold text-gray-600">Buka Kamera Scanner</span> di panel sebelah kiri atau ketik nomor PTW manual untuk memverifikasi.
+                                                    </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -2062,11 +2078,36 @@ function doGet(e) {
         function handlePtwScanResult(scannedText) {
             const foundPtw = state.ptwList.find(p => p.no.toLowerCase() === scannedText.trim().toLowerCase());
             if (foundPtw) {
+                renderSecurityPtwSearchResult(foundPtw);
                 showPtwDetailModal(foundPtw);
                 showToast(`Data PTW ${foundPtw.no} berhasil ditemukan!`, 'success');
             } else {
                 showToast(`Permit to Work (${scannedText}) tidak ditemukan dalam database!`, 'error');
             }
+        }
+
+        function renderSecurityPtwSearchResult(ptw) {
+            const body = document.getElementById('ptwSecurityTableBody');
+            if (!body) return;
+
+            let statusStyle = "bg-emerald-50 text-emerald-600";
+            if (ptw.status === 'Pending') statusStyle = "bg-amber-50 text-amber-600";
+            if (ptw.status === 'Selesai') statusStyle = "bg-sky-50 text-sky-600";
+
+            body.innerHTML = `
+                <tr class="hover:bg-orange-50/30 transition animate-in fade-in duration-200">
+                    <td class="px-4 py-3.5 font-bold text-gray-900">${ptw.no}</td>
+                    <td class="px-4 py-3.5">${ptw.type}</td>
+                    <td class="px-4 py-3.5">${ptw.contractor}</td>
+                    <td class="px-4 py-3.5">${ptw.location}</td>
+                    <td class="px-4 py-3.5 text-gray-500">${ptw.expiry}</td>
+                    <td class="px-4 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${statusStyle}">${ptw.status}</span></td>
+                    <td class="px-4 py-3.5 text-right flex items-center justify-end gap-1.5">
+                        <button onclick="openPtwQrModal('${ptw.no}')" class="p-1.5 rounded-lg text-orange-600 bg-orange-50 hover:bg-orange-100 transition" title="Tampilkan QR Code"><i class="fa-solid fa-qrcode"></i></button>
+                        <button onclick="showPtwDetailModal(state.ptwList.find(p=>p.no==='${ptw.no}'))" class="p-1.5 rounded-lg text-blue-600 bg-blue-50 hover:bg-blue-100 transition" title="Lihat Detail"><i class="fa-solid fa-eye"></i></button>
+                    </td>
+                </tr>
+            `;
         }
 
         function handleHeaderPtwSearch() {
