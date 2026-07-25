@@ -2,21 +2,13 @@
  * AK4L - QSHE & Security Portal | LRT Jakarta
  * Backend Google Apps Script (Code.gs)
  *
- * Petunjuk Penggunaan:
- * 1. Buka Google Sheets baru atau yang sudah ada.
- * 2. Klik Extensions (Ekstensi) > Apps Script.
- * 3. Hapus semua kode bawaan, lalu tempelkan (paste) seluruh kode di bawah ini.
- * 4. Simpan proyek (Ctrl+S / Cmd+S).
- * 5. Klik "Deploy" (Terapkan) > "New deployment" (Terapkan baru).
- * 6. Pilih tipe: "Web app" (Aplikasi web).
- * 7. Setting:
- *    - Execute as: "Me" (Saya)
- *    - Who has access: "Anyone" (Siapa saja)
- * 8. Klik "Deploy" dan salin Web App URL yang dihasilkan.
- * 9. Tempelkan Web App URL tersebut ke dalam menu Pengaturan Koneksi Google Sheets di portal AK4L.
+ * Target Google Spreadsheet ID: 1GzGKANhPZz4CCIqc_1o7yO_A7d_GeuMklmR40-o-nD4
  */
 
-// Nama-nama sheet yang digunakan dalam Google Spreadsheet
+// ID Google Spreadsheet
+const SPREADSHEET_ID = '1GzGKANhPZz4CCIqc_1o7yO_A7d_GeuMklmR40-o-nD4';
+
+// Nama-nama sheet/tabel yang digunakan dalam Google Spreadsheet
 const SHEETS = {
   PTW: 'Permit_To_Work',
   HAZARD: 'Hazard_Reports',
@@ -26,22 +18,41 @@ const SHEETS = {
 };
 
 /**
- * Mengani permintaan HTTP GET
+ * Mengambil instance Google Spreadsheet berdasarkan ID
+ */
+function getSpreadsheet() {
+  return SpreadsheetApp.openById(SPREADSHEET_ID);
+}
+
+/**
+ * Menangani permintaan HTTP GET (Pengambilan data frontend & status check)
  */
 function doGet(e) {
   try {
     var action = e && e.parameter ? e.parameter.action : null;
     
-    // Jika meminta data dari frontend
+    // Aksi 1: Ambil seluruh data dari semua tabel
     if (action === 'getData') {
       var allData = getAllPortalData();
       return createJsonResponse({ status: 'success', data: allData });
     }
 
-    // Default tampilan konfirmasi status backend
+    // Aksi 2: Cari detail PTW spesifik berdasarkan Nomor PTW
+    if (action === 'getPtw') {
+      var ptwNo = e.parameter.no;
+      var ptwData = getPtwByNo(ptwNo);
+      if (ptwData) {
+        return createJsonResponse({ status: 'success', ptw: ptwData });
+      } else {
+        return createJsonResponse({ status: 'not_found', message: 'Data PTW tidak ditemukan' });
+      }
+    }
+
+    // Default: Tampilan status aktif backend
     return ContentService.createTextOutput(JSON.stringify({
       status: 'active',
       app: 'AK4L QSHE & Security Portal Backend - LRT Jakarta',
+      spreadsheetId: SPREADSHEET_ID,
       timestamp: new Date().toISOString()
     })).setMimeType(ContentService.MimeType.JSON);
 
@@ -51,7 +62,7 @@ function doGet(e) {
 }
 
 /**
- * Menangani permintaan HTTP POST (Pengiriman Form & Aksi)
+ * Menangani permintaan HTTP POST (Pengiriman Form, Input PTW, & Update Status)
  */
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -76,6 +87,10 @@ function doPost(e) {
         handleAddPtw(payload, timestamp);
         break;
 
+      case 'updatePtwStatus':
+        handleUpdatePtwStatus(payload, timestamp);
+        break;
+
       case 'addHazard':
         handleAddHazard(payload, timestamp);
         break;
@@ -92,10 +107,6 @@ function doPost(e) {
         handleAddAparSchedule(payload, timestamp);
         break;
 
-      case 'updatePtwStatus':
-        handleUpdatePtwStatus(payload, timestamp);
-        break;
-
       default:
         responseData = { status: 'error', message: 'Aksi (' + action + ') tidak dikenali' };
         break;
@@ -110,9 +121,8 @@ function doPost(e) {
   }
 }
 
-
 /**
- * Pendaftaran PTW Baru
+ * Pendaftaran PTW Baru oleh Petugas QSHE
  */
 function handleAddPtw(data, timestamp) {
   var sheet = getOrCreateSheet(SHEETS.PTW, [
@@ -130,6 +140,49 @@ function handleAddPtw(data, timestamp) {
     data.status || 'Pending',
     timestamp
   ]);
+}
+
+/**
+ * Update Status PTW (Verifikasi / Approval / Close)
+ */
+function handleUpdatePtwStatus(data, timestamp) {
+  var sheet = getOrCreateSheet(SHEETS.PTW, []);
+  var rows = sheet.getDataRange().getValues();
+
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][0] === data.no) {
+      sheet.getRange(i + 1, 8).setValue(data.status); // Kolom Status (Ke-8)
+      sheet.getRange(i + 1, 10).setValue('Updated: ' + timestamp);
+      break;
+    }
+  }
+}
+
+/**
+ * Cari Data PTW berdasarkan Nomor PTW
+ */
+function getPtwByNo(ptwNo) {
+  if (!ptwNo) return null;
+  var ss = getSpreadsheet();
+  var sheet = ss.getSheetByName(SHEETS.PTW);
+  if (!sheet) return null;
+
+  var data = sheet.getDataRange().getValues();
+  for (var i = 1; i < data.length; i++) {
+    if (String(data[i][0]).trim().toLowerCase() === String(ptwNo).trim().toLowerCase()) {
+      return {
+        no: data[i][0],
+        type: data[i][1],
+        contractor: data[i][2],
+        location: data[i][3],
+        expiry: data[i][4],
+        time: data[i][5],
+        supervisor: data[i][6],
+        status: data[i][7]
+      };
+    }
+  }
+  return null;
 }
 
 /**
@@ -209,23 +262,6 @@ function handleAddAparSchedule(data, timestamp) {
 }
 
 /**
- * Update Status PTW (Verifikasi / Approval / Close)
- */
-function handleUpdatePtwStatus(data, timestamp) {
-  var sheet = getOrCreateSheet(SHEETS.PTW, []);
-  var rows = sheet.getDataRange().getValues();
-
-  for (var i = 1; i < rows.length; i++) {
-    if (rows[i][0] === data.no) {
-      sheet.getRange(i + 1, 8).setValue(data.status); // Kolom Status (Ke-8)
-      sheet.getRange(i + 1, 10).setValue('Updated: ' + timestamp);
-      break;
-    }
-  }
-}
-
-
-/**
  * Memastikan semua tabel / sheet memiliki struktur kolom yang sesuai
  */
 function ensureDatabaseStructure() {
@@ -240,7 +276,7 @@ function ensureDatabaseStructure() {
  * Mengambil atau membuat sheet baru beserta header kolomnya
  */
 function getOrCreateSheet(sheetName, headers) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet();
   var sheet = ss.getSheetByName(sheetName);
 
   if (!sheet) {
@@ -248,7 +284,7 @@ function getOrCreateSheet(sheetName, headers) {
     if (headers && headers.length > 0) {
       sheet.appendRow(headers);
       
-      // Styling header otomatis
+      // Styling header otomatis dengan warna oranye LRT Jakarta
       var headerRange = sheet.getRange(1, 1, 1, headers.length);
       headerRange.setBackground('#f24d1a')
                  .setFontColor('#ffffff')
@@ -264,7 +300,7 @@ function getOrCreateSheet(sheetName, headers) {
  * Mengambil seluruh data dari semua tabel untuk sinkronisasi portal
  */
 function getAllPortalData() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getSpreadsheet();
   var result = {};
 
   Object.keys(SHEETS).forEach(function(key) {
