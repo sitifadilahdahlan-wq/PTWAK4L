@@ -119,7 +119,7 @@
                              onerror="this.src='https://placehold.co/200x60/f24d1a/ffffff?text=LRT+JAKARTA'">
                     </div>
 
-                    <!-- PC & Tablet Full Navigation Bar (Visible on Tablet & PC: md and lg screens) -->
+                    <!-- PC & Tablet Full Navigation Bar -->
                     <nav class="hidden md:flex items-center gap-1 sm:gap-2 relative">
                         <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 bg-white/20 border border-white/10 text-white">
                             <i class="fa-solid fa-house text-xs"></i> Dashboard
@@ -197,10 +197,8 @@
                                     <span class="text-[9px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold">Ubah</span>
                                 </button>
 
-                                <!-- Hidden Settings Menu Items as requested -->
-                                <button onclick="openDatabaseSettingsModal()" class="hidden w-full text-left px-4 py-2 text-xs text-orange-600 hover:bg-orange-50 font-bold items-center gap-2"><i class="fa-solid fa-database text-orange-500"></i> Koneksi Google Sheets</button>
-                                <button onclick="openModal('appsScriptModal')" class="hidden w-full text-left px-4 py-2 text-xs text-blue-600 hover:bg-blue-50 font-bold items-center gap-2"><i class="fa-solid fa-code text-blue-500"></i> Kode Code.gs Apps Script</button>
-                                <button onclick="switchTab('security'); switchSubTab('competency')" class="hidden w-full text-left px-4 py-2 text-xs hover:bg-gray-50 items-center gap-2"><i class="fa-solid fa-users-viewfinder text-gray-400"></i> Personel Aktif</button>
+                                <button onclick="openDatabaseSettingsModal()" class="w-full text-left px-4 py-2 text-xs text-orange-600 hover:bg-orange-50 font-bold flex items-center gap-2"><i class="fa-solid fa-database text-orange-500"></i> Koneksi Google Sheets</button>
+                                <button onclick="openModal('appsScriptModal')" class="w-full text-left px-4 py-2 text-xs text-blue-600 hover:bg-blue-50 font-bold flex items-center gap-2"><i class="fa-solid fa-code text-blue-500"></i> Kode Code.gs Apps Script</button>
                                 
                                 <div class="h-px bg-gray-100 my-1"></div>
                                 <button onclick="handleLogout()" class="w-full text-left px-4 py-2 text-xs text-red-600 hover:bg-red-50 flex items-center gap-2 font-semibold"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Aplikasi</button>
@@ -515,7 +513,7 @@
                                 </h3>
                                 <p class="text-xs text-gray-400 mt-0.5">Sistem pelaporan kondisi tidak aman (KTA) dan tindakan tidak aman (TTA)</p>
                             </div>
-                            <button onclick="openHazardModal()" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow">
+                            <button onclick="openModal('hazardModal')" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow">
                                 + Laporkan Temuan Baru
                             </button>
                         </div>
@@ -612,7 +610,7 @@
                                 <p class="text-xs text-gray-400 mt-0.5">Modul khusus Petugas QSHE untuk menerbitkan dan mengelola izin kerja berisiko tinggi di area operasional LRT Jakarta.</p>
                             </div>
                             <div class="flex items-center gap-2">
-                                <button onclick="handleOpenAddPtwModal()" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-md flex items-center gap-2">
+                                <button onclick="openModal('addPtwModal')" class="bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-md flex items-center gap-2">
                                     <i class="fa-solid fa-plus text-sm"></i> + Input PTW Baru
                                 </button>
                             </div>
@@ -750,27 +748,6 @@
 
             <!-- ================= TAB 3: SECURITY VIEW ================= -->
             <div id="tabView-security" class="tab-view hidden flex flex-col gap-6">
-                
-                <!-- SUB-NAV TAB BAR (HIDDEN) -->
-                <div class="hidden bg-gradient-to-r from-[#f24d1a] to-[#fa881b] p-2.5 rounded-2xl shadow-md">
-                    <div class="bg-white rounded-2xl p-1.5 flex flex-wrap sm:flex-nowrap gap-1 shadow-inner">
-                        <button onclick="switchSubTab('metrics')" id="subbtn-metrics" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-chart-line"></i> Matriks Security
-                        </button>
-                        <button onclick="switchSubTab('reports')" id="subbtn-reports" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-folder-open"></i> Laporan BUJP
-                        </button>
-                        <button onclick="switchSubTab('competency')" id="subbtn-competency" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-id-card-clip"></i> Kompetensi Personil
-                        </button>
-                        <button onclick="switchSubTab('vms')" id="subbtn-vms" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-user-shield"></i> Visitor Management
-                        </button>
-                        <button onclick="switchSubTab('ptw')" id="subbtn-ptw" class="flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-file-signature"></i> E-Cek PTW
-                        </button>
-                    </div>
-                </div>
 
                 <!-- SUB-VIEW 1: SECURITY KEY METRIC -->
                 <div id="subview-metrics" class="security-subview flex flex-col gap-6">
@@ -1216,7 +1193,7 @@
                         </div>
                     </div>
 
-                    <!-- TWO COLUMN LAYOUT: PENCARIAN & QR CODE (LEFT) vs DATA PTW (RIGHT) -->
+                    <!-- TWO COLUMN LAYOUT: PENCARIAN & QR CODE vs DATA PTW -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         
                         <!-- LEFT COLUMN: PENCARIAN & PINDAI QRCODE -->
@@ -1541,7 +1518,7 @@
             <div class="flex justify-between items-start pb-4 border-b border-gray-100">
                 <div>
                     <h3 class="text-sm font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-code text-blue-500 text-base"></i> Script Google Apps Script (Code.gs)</h3>
-                    <p class="text-[11px] text-gray-400 mt-0.5">Gunakan kode ini pada editor <span class="font-semibold text-gray-700">Code.gs</span>.</p>
+                    <p class="text-[11px] text-gray-400 mt-0.5">Gunakan kode backend ini pada editor <span class="font-semibold text-gray-700">Code.gs</span> di Google Apps Script.</p>
                 </div>
                 <button type="button" onclick="closeModal('appsScriptModal')" class="text-gray-400 hover:text-gray-600 text-sm p-1">
                     <i class="fa-solid fa-xmark"></i>
@@ -1550,11 +1527,14 @@
             
             <div class="mt-4 space-y-3">
                 <div class="relative">
-                    <pre class="bg-gray-900 text-emerald-400 p-4 rounded-2xl text-[11px] font-mono overflow-x-auto max-h-60 leading-relaxed" id="appsScriptCodeText">function doGet(e) {
-  return HtmlService.createHtmlOutputFromFile('index')
-      .setTitle('AK4L - QSHE & Security Portal | LRT Jakarta')
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+                    <pre class="bg-gray-900 text-emerald-400 p-4 rounded-2xl text-[11px] font-mono overflow-x-auto max-h-60 leading-relaxed" id="appsScriptCodeText">const SPREADSHEET_ID = '1GzGKANhPZz4CCIqc_1o7yO_A7d_GeuMklmR40-o-nD4';
+
+function doGet(e) {
+  var action = e && e.parameter ? e.parameter.action : null;
+  if (action === 'getData') {
+    return ContentService.createTextOutput(JSON.stringify({ status: 'success', data: getAllPortalData() })).setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput(JSON.stringify({ status: 'active', app: 'AK4L LRT Jakarta Backend' })).setMimeType(ContentService.MimeType.JSON);
 }</pre>
                     <button onclick="copyAppsScriptCode()" class="absolute top-3 right-3 bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-xl text-[10px] font-bold backdrop-blur-md transition flex items-center gap-1.5">
                         <i class="fa-regular fa-copy"></i> Salin Kode
@@ -1672,15 +1652,15 @@
                 <h3 class="font-bold text-xs sm:text-sm"><i class="fa-solid fa-file-signature"></i> Input Permit to Work (PTW) Baru</h3>
                 <button onclick="closeModal('addPtwModal')" class="text-white/80 hover:text-white text-base"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form onsubmit="submitNewPtw(event)" class="p-5 sm:p-6 space-y-4">
+            <form onsubmit="submitNewPtwModal(event)" class="p-5 sm:p-6 space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Nomor PTW *</label>
-                        <input type="text" id="ptwNo" placeholder="PTW-2026-078" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                        <input type="text" id="ptwNoModal" placeholder="PTW-2026-078" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Jenis Pekerjaan *</label>
-                        <select id="ptwType" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500">
+                        <select id="ptwTypeModal" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500">
                             <option>Hot Work (Pengelasan/Pemotongan)</option>
                             <option>Working at Height (Ketinggian)</option>
                             <option>Electrical & High Voltage Work</option>
@@ -1693,28 +1673,28 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Pelaksana / Kontraktor *</label>
-                        <input type="text" id="ptwContractor" placeholder="PT Wika / Tim Maintenance" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                        <input type="text" id="ptwContractorModal" placeholder="PT Wika / Tim Maintenance" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Lokasi Pekerjaan *</label>
-                        <input type="text" id="ptwLocation" placeholder="Depo LRT / Stasiun Velodrome" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                        <input type="text" id="ptwLocationModal" placeholder="Depo LRT / Stasiun Velodrome" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Tanggal Berlaku *</label>
-                        <input type="date" id="ptwDate" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                        <input type="date" id="ptwDateModal" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                     </div>
                     <div>
                         <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Jam Kerja (Mulai - Selesai)</label>
-                        <input type="text" id="ptwTime" placeholder="08:00 - 17:00 WIB" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                        <input type="text" id="ptwTimeModal" placeholder="08:00 - 17:00 WIB" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-[10px] font-bold text-gray-600 uppercase mb-1">Penanggung Jawab / Supervisor</label>
-                    <input type="text" id="ptwSupervisor" placeholder="Nama Supervisor Pekerjaan" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
+                    <input type="text" id="ptwSupervisorModal" placeholder="Nama Supervisor Pekerjaan" class="w-full p-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:ring-1 focus:ring-lrtOrange-500" required>
                 </div>
 
                 <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#f24d1a] to-[#fa881b] hover:opacity-95 text-white text-xs font-bold transition shadow-md">
@@ -1864,7 +1844,6 @@
 
     <!-- ================= SYSTEM LOGIC SCRIPT ================= -->
     <script>
-        // Global Application State Management
         const state = {
             isLoggedIn: true,
             userRole: 'BUJP', // 'BUJP' or 'QSHE'
@@ -2027,9 +2006,7 @@
                         closeQrScannerModal();
                         handlePtwScanResult(decodedText);
                     },
-                    (errorMessage) => {
-                        // Scan tick error ignored
-                    }
+                    () => {}
                 );
 
                 isScanning = true;
@@ -2070,135 +2047,347 @@
 
             if (placeholder) placeholder.classList.remove('hidden');
             if (statusDot) statusDot.className = "h-2 w-2 rounded-full bg-gray-400";
-            if (statusText) statusText.innerText = "Status: Kamera Non-aktif";
+            if (statusText) statusText.innerText = "Status: Siap / Non-aktif";
             if (btnText) btnText.innerText = "Mulai Scan";
             if (btnIcon) btnIcon.className = "fa-solid fa-play";
             if (btnStartStop) btnStartStop.className = "px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white font-bold transition shadow-sm flex items-center gap-1.5 text-[11px]";
         }
 
         function simulateQrScan(ptwNo) {
+            stopCameraScan();
             closeQrScannerModal();
             handlePtwScanResult(ptwNo);
         }
 
-        function handlePtwScanResult(code) {
-            const cleanedCode = code.trim();
-            const found = state.ptwList.find(p => p.no.toLowerCase() === cleanedCode.toLowerCase());
-            
-            if (found) {
-                showPtwDetail(found.no);
-                showToast(`QR Code Terverifikasi: ${found.no}`, 'success');
+        function handlePtwScanResult(scannedText) {
+            const foundPtw = state.ptwList.find(p => p.no.toLowerCase() === scannedText.trim().toLowerCase());
+            if (foundPtw) {
+                showPtwDetailModal(foundPtw);
+                showToast(`Data PTW ${foundPtw.no} berhasil ditemukan!`, 'success');
             } else {
-                showToast(`PTW '${cleanedCode}' tidak terdaftar atau telah kedaluwarsa.`, 'error');
+                showToast(`Permit to Work (${scannedText}) tidak ditemukan dalam database!`, 'error');
             }
         }
 
-        function displayPtwQr(ptwNo) {
-            const item = state.ptwList.find(p => p.no === ptwNo);
-            if (!item) return;
+        function handleHeaderPtwSearch() {
+            const input = document.getElementById('ptwHeaderSearchInput');
+            if (input && input.value.trim() !== '') {
+                handlePtwScanResult(input.value.trim());
+            }
+        }
 
-            const qrTitle = document.getElementById('qrModalPtwNo');
-            const qrContractor = document.getElementById('qrModalContractor');
-            const qrImg = document.getElementById('qrModalImage');
+        function showPtwDetailModal(ptw) {
+            document.getElementById('detPtwNo').innerText = ptw.no;
+            document.getElementById('detPtwType').innerText = ptw.type;
+            document.getElementById('detPtwLocation').innerText = ptw.location;
+            document.getElementById('detPtwContractor').innerText = ptw.contractor;
+            document.getElementById('detPtwSupervisor').innerText = ptw.supervisor;
+            document.getElementById('detPtwExpiry').innerText = `${ptw.expiry} | Jam: ${ptw.time}`;
 
-            if (qrTitle) qrTitle.innerText = item.no;
-            if (qrContractor) qrContractor.innerText = `${item.contractor} - ${item.location}`;
-            if (qrImg) {
-                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(item.no)}`;
+            const badge = document.getElementById('detPtwStatusBadge');
+            if (badge) {
+                if (ptw.status === 'Aktif') {
+                    badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-200";
+                    badge.innerText = "Aktif / On-Site";
+                } else if (ptw.status === 'Pending') {
+                    badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-200";
+                    badge.innerText = "Perlu Verifikasi";
+                } else {
+                    badge.className = "px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 border border-gray-200";
+                    badge.innerText = ptw.status;
+                }
             }
 
-            openModal('ptwQrModal');
+            const actionContainer = document.getElementById('detPtwActionContainer');
+            if (actionContainer) {
+                if (ptw.status === 'Pending') {
+                    actionContainer.innerHTML = `
+                        <div class="flex gap-2">
+                            <button onclick="updatePtwStatus('${ptw.no}', 'Aktif')" class="flex-1 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition shadow">
+                                <i class="fa-solid fa-check mr-1"></i> Verifikasi & Setujui PTW
+                            </button>
+                        </div>
+                    `;
+                } else if (ptw.status === 'Aktif') {
+                    actionContainer.innerHTML = `
+                        <div class="flex gap-2">
+                            <button onclick="updatePtwStatus('${ptw.no}', 'Selesai')" class="flex-1 py-2.5 rounded-xl bg-sky-600 text-white text-xs font-bold hover:bg-sky-700 transition shadow">
+                                <i class="fa-solid fa-flag-checkered mr-1"></i> Close / Selesaikan Pekerjaan
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    actionContainer.innerHTML = `<p class="text-[11px] text-gray-400 text-center py-1">Pekerjaan ini telah selesai dan ditutup.</p>`;
+                }
+            }
+
+            openModal('ptwDetailModal');
+        }
+
+        function updatePtwStatus(ptwNo, newStatus) {
+            const ptw = state.ptwList.find(p => p.no === ptwNo);
+            if (ptw) {
+                ptw.status = newStatus;
+                showToast(`Status ${ptwNo} diperbarui menjadi ${newStatus}`, 'success');
+                closeModal('ptwDetailModal');
+                renderPtwTables();
+                renderMetrics();
+                
+                // Sync with Google Sheets backend if connected
+                if (state.backendUrl) {
+                    fetch(state.backendUrl, {
+                        method: 'POST',
+                        body: JSON.stringify({ action: 'updatePtwStatus', no: ptwNo, status: newStatus })
+                    }).catch(e => console.error("Backend error:", e));
+                }
+            }
+        }
+
+        function openPtwQrModal(ptwNo) {
+            const ptw = state.ptwList.find(p => p.no === ptwNo);
+            if (ptw) {
+                document.getElementById('qrModalPtwNo').innerText = ptw.no;
+                document.getElementById('qrModalContractor').innerText = `${ptw.contractor} - ${ptw.location}`;
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(ptw.no)}`;
+                document.getElementById('qrModalImage').src = qrUrl;
+                openModal('ptwQrModal');
+            }
         }
 
         function printQrCode() {
             window.print();
         }
 
-        function handleHeaderPtwSearch() {
-            const input = document.getElementById('ptwHeaderSearchInput');
-            if (input && input.value.trim()) {
-                handlePtwScanResult(input.value.trim());
+        function submitNewPtw(e) {
+            e.preventDefault();
+            const no = document.getElementById('ptwNoQshe').value.trim();
+            const type = document.getElementById('ptwTypeQshe').value;
+            const contractor = document.getElementById('ptwContractorQshe').value.trim();
+            const location = document.getElementById('ptwLocationQshe').value.trim();
+            const date = document.getElementById('ptwDateQshe').value;
+            const time = document.getElementById('ptwTimeQshe').value.trim();
+            const supervisor = document.getElementById('ptwSupervisorQshe').value.trim();
+
+            const newPtw = { no, type, contractor, location, expiry: date, time, supervisor, status: 'Pending' };
+            state.ptwList.unshift(newPtw);
+            
+            showToast(`PTW ${no} berhasil ditambahkan!`, 'success');
+            renderPtwTables();
+            renderMetrics();
+            
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addPtw', ...newPtw })
+                }).catch(e => console.error(e));
+            }
+
+            e.target.reset();
+        }
+
+        function submitNewPtwModal(e) {
+            e.preventDefault();
+            const no = document.getElementById('ptwNoModal').value.trim();
+            const type = document.getElementById('ptwTypeModal').value;
+            const contractor = document.getElementById('ptwContractorModal').value.trim();
+            const location = document.getElementById('ptwLocationModal').value.trim();
+            const date = document.getElementById('ptwDateModal').value;
+            const time = document.getElementById('ptwTimeModal').value.trim();
+            const supervisor = document.getElementById('ptwSupervisorModal').value.trim();
+
+            const newPtw = { no, type, contractor, location, expiry: date, time, supervisor, status: 'Pending' };
+            state.ptwList.unshift(newPtw);
+            
+            showToast(`PTW ${no} berhasil diterbitkan!`, 'success');
+            closeModal('addPtwModal');
+            renderPtwTables();
+            renderMetrics();
+
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addPtw', ...newPtw })
+                }).catch(e => console.error(e));
+            }
+        }
+
+        function submitHazardReport(e) {
+            e.preventDefault();
+            const title = document.getElementById('hzTitle').value.trim();
+            const location = document.getElementById('hzLoc').value.trim();
+            const severity = document.getElementById('hzSeverity').value;
+            const id = `HZ-00${state.hazards.length + 1}`;
+
+            const newHz = { id, title, location, severity, status: 'Open' };
+            state.hazards.unshift(newHz);
+
+            showToast(`Temuan bahaya ${id} dilaporkan!`, 'success');
+            closeModal('hazardModal');
+            renderHazards();
+
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addHazard', ...newHz })
+                }).catch(e => console.error(e));
+            }
+        }
+
+        function submitBujpReport(e) {
+            e.preventDefault();
+            const name = document.getElementById('uplRepName').value.trim();
+            const month = document.getElementById('uplRepMonth').value;
+            const id = `BUJP-REP-${100 + state.bujpReports.length + 1}`;
+            const date = new Date().toISOString().split('T')[0];
+
+            const newRep = { id, name, date, uploadedBy: state.userRole === 'BUJP' ? 'Petugas BUJP' : 'Petugas QSHE', month, status: 'Approved' };
+            state.bujpReports.unshift(newRep);
+
+            showToast(`Laporan BUJP berhasil diunggah!`, 'success');
+            closeModal('uploadReportModal');
+            renderBujpReports();
+
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addBujpReport', ...newRep })
+                }).catch(e => console.error(e));
+            }
+        }
+
+        function submitVmsForm(e) {
+            e.preventDefault();
+            const name = document.getElementById('vmsName').value.trim();
+            const org = document.getElementById('vmsOrg').value.trim() || 'Umum';
+            const date = document.getElementById('vmsDate').value;
+            const time = document.getElementById('vmsTime').value;
+            const contact = document.getElementById('vmsContact').value.trim();
+            const duration = document.getElementById('vmsDuration').value.trim();
+            const purpose = document.getElementById('vmsPurpose').value.trim();
+
+            const newVms = { name, org, date, time, contact, duration, purpose, status: 'Approved' };
+            state.visitorList.unshift(newVms);
+
+            showToast(`Pengajuan kunjungan untuk ${name} disetujui!`, 'success');
+            renderVms();
+            e.target.reset();
+
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addVms', ...newVms })
+                }).catch(e => console.error(e));
+            }
+        }
+
+        function submitAparSchedule(e) {
+            e.preventDefault();
+            const code = document.getElementById('schedCode').value.trim();
+            const location = document.getElementById('schedLoc').value.trim();
+            const date = document.getElementById('schedDate').value;
+            const officer = document.getElementById('schedOfficer').value.trim();
+
+            const newSched = { code, location, date, officer, status: 'Terjadwal' };
+            state.schedules.unshift(newSched);
+
+            showToast(`Jadwal inspeksi untuk ${code} disimpan!`, 'success');
+            closeModal('scheduleModal');
+            renderSchedules();
+
+            if (state.backendUrl) {
+                fetch(state.backendUrl, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'addAparSchedule', ...newSched })
+                }).catch(e => console.error(e));
             }
         }
 
         function switchTab(tabId) {
             state.activeTab = tabId;
-
-            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
             
-            const activeView = document.getElementById(`tabView-${tabId}`);
-            if (activeView) activeView.classList.remove('hidden');
+            const targetView = document.getElementById(`tabView-${tabId}`);
+            if (targetView) targetView.classList.remove('hidden');
 
-            const titleEl = document.getElementById('mainHeaderTitle');
-            const subEl = document.getElementById('mainHeaderSubtitle');
+            const headerTitle = document.getElementById('mainHeaderTitle');
+            const headerSub = document.getElementById('mainHeaderSubtitle');
 
             if (tabId === 'dashboard') {
-                if (titleEl) titleEl.innerText = "Dashboard";
-                if (subEl) subEl.innerText = "Akses Kualitas Keselamatan Keamanan Kesehatan & Lingkungan";
+                if (headerTitle) headerTitle.innerText = "Dashboard Utama";
+                if (headerSub) headerSub.innerText = "Ringkasan Portal AK4L LRT Jakarta";
             } else if (tabId === 'qshe') {
-                if (titleEl) titleEl.innerText = "QSHE Portal";
-                if (subEl) subEl.innerText = "Sistem Manajemen Kualitas, Keselamatan, Kesehatan Kerja & Lingkungan";
+                if (headerTitle) headerTitle.innerText = "Modul QSHE";
+                if (headerSub) headerSub.innerText = "Kualitas, Keselamatan, Kesehatan, & Lingkungan";
                 switchQsheSubTab(state.activeQsheSubTab);
             } else if (tabId === 'security') {
-                if (titleEl) titleEl.innerText = "Security Management";
-                if (subEl) subEl.innerText = "Portal Keamanan Operasional & Personel Security LRT Jakarta";
+                if (headerTitle) headerTitle.innerText = "Modul Security";
+                if (headerSub) headerSub.innerText = "Sistem Pengawasan Keamanan & BUJP";
                 switchSubTab(state.activeSubTab);
             } else if (tabId === 'apar') {
-                if (titleEl) titleEl.innerText = "APAR & Hydrant System";
-                if (subEl) subEl.innerText = "Sistem Inspeksi & Pemeliharaan Alat Pemadam Api Ringan";
+                if (headerTitle) headerTitle.innerText = "APAR & Hydrant";
+                if (headerSub) headerSub.innerText = "Inspeksi & Pemeliharaan Alat Pemadam Api";
                 switchAparSubTab(state.activeAparSubTab);
             }
 
-            // Mobile BNav Style Update
-            document.querySelectorAll('[id^="bnav-"]').forEach(btn => {
-                btn.className = "flex-1 flex flex-col items-center py-1 text-gray-400";
+            // Update mobile bottom nav highlight
+            ['dashboard', 'qshe', 'security', 'apar'].forEach(t => {
+                const bnav = document.getElementById(`bnav-${t}`);
+                if (bnav) {
+                    if (t === tabId) {
+                        bnav.className = "flex-1 flex flex-col items-center py-1 text-orange-600 font-bold";
+                    } else {
+                        bnav.className = "flex-1 flex flex-col items-center py-1 text-gray-400";
+                    }
+                }
             });
-            const activeBnav = document.getElementById(`bnav-${tabId}`);
-            if (activeBnav) activeBnav.className = "flex-1 flex flex-col items-center py-1 text-orange-600 font-bold";
-
-            // Desktop Tab Button Highlight
-            document.querySelectorAll('[id^="btn-tab-"]').forEach(btn => {
-                btn.className = "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 text-white/80 hover:text-white hover:bg-white/10";
-            });
-            const activeBtn = document.getElementById(`btn-tab-${tabId}`);
-            if (activeBtn) activeBtn.className = "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold tracking-wide transition duration-150 bg-white/20 border border-white/10 text-white";
-        }
-
-        function switchQsheSubTab(subId) {
-            state.activeQsheSubTab = subId;
-            document.querySelectorAll('.qshe-subview').forEach(sv => sv.classList.add('hidden'));
-            const activeSub = document.getElementById(`qshe-subview-${subId}`);
-            if (activeSub) activeSub.classList.remove('hidden');
         }
 
         function switchSubTab(subId) {
             state.activeSubTab = subId;
-            document.querySelectorAll('.security-subview').forEach(sv => sv.classList.add('hidden'));
-            const activeSub = document.getElementById(`subview-${subId}`);
-            if (activeSub) activeSub.classList.remove('hidden');
+            document.querySelectorAll('.security-subview').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`subview-${subId}`);
+            if (target) target.classList.remove('hidden');
+
+            ['metrics', 'reports', 'competency', 'vms', 'ptw'].forEach(s => {
+                const btn = document.getElementById(`subbtn-${s}`);
+                if (btn) {
+                    if (s === subId) {
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 bg-gradient-to-r from-[#f24d1a] to-[#fa881b] text-white shadow-md flex items-center justify-center gap-2";
+                    } else {
+                        btn.className = "flex-1 py-2.5 px-4 text-center rounded-xl text-xs font-bold tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-100/70 flex items-center justify-center gap-2";
+                    }
+                }
+            });
 
             if (subId === 'competency') {
                 switchCompetencySubTab(state.activeCompSubTab);
             }
         }
 
-        function switchAparSubTab(subId) {
-            state.activeAparSubTab = subId;
-            document.querySelectorAll('.apar-subview').forEach(sv => sv.classList.add('hidden'));
-            const activeSub = document.getElementById(`apar-subview-${subId}`);
-            if (activeSub) activeSub.classList.remove('hidden');
+        function switchQsheSubTab(subId) {
+            state.activeQsheSubTab = subId;
+            document.querySelectorAll('.qshe-subview').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`qshe-subview-${subId}`);
+            if (target) target.classList.remove('hidden');
         }
 
-        function switchCompetencySubTab(compSubId) {
-            state.activeCompSubTab = compSubId;
-            document.querySelectorAll('.comp-panel').forEach(cp => cp.classList.add('hidden'));
-            const activePanel = document.getElementById(`comp-panel-${compSubId}`);
-            if (activePanel) activePanel.classList.remove('hidden');
+        function switchAparSubTab(subId) {
+            state.activeAparSubTab = subId;
+            document.querySelectorAll('.apar-subview').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`apar-subview-${subId}`);
+            if (target) target.classList.remove('hidden');
+        }
 
-            ['matrix', 'personnel', 'job', 'skills'].forEach(id => {
-                const btn = document.getElementById(`compbtn-${id}`);
+        function switchCompetencySubTab(panelId) {
+            state.activeCompSubTab = panelId;
+            document.querySelectorAll('.comp-panel').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`comp-panel-${panelId}`);
+            if (target) target.classList.remove('hidden');
+
+            ['matrix', 'personnel', 'job', 'skills'].forEach(p => {
+                const btn = document.getElementById(`compbtn-${p}`);
                 if (btn) {
-                    if (id === compSubId) {
+                    if (p === panelId) {
                         btn.className = "flex-1 py-2 px-3 text-center rounded-lg text-xs font-semibold tracking-tight transition duration-150 bg-white text-gray-900 shadow-sm border border-gray-200 flex items-center justify-center gap-2";
                     } else {
                         btn.className = "flex-1 py-2 px-3 text-center rounded-lg text-xs font-medium tracking-tight transition duration-150 text-gray-600 hover:text-gray-900 hover:bg-gray-50 flex items-center justify-center gap-2";
@@ -2207,150 +2396,91 @@
             });
         }
 
-        function renderSkillMatrixSummary() {
-            const total = state.totalPersonnel;
-            
-            const counts = { basic: 0, fire: 0, aid: 0, crowd: 0, cctv: 0, driving: 0 };
-            state.personnel.forEach(p => {
-                if (p.skills.basic) counts.basic++;
-                if (p.skills.fire) counts.fire++;
-                if (p.skills.aid) counts.aid++;
-                if (p.skills.crowd) counts.crowd++;
-                if (p.skills.cctv) counts.cctv++;
-                if (p.skills.driving) counts.driving++;
-            });
+        function renderPtwTables() {
+            const qsheBody = document.getElementById('ptwQsheTableBody');
 
-            const keys = ['basic', 'fire', 'aid', 'crowd', 'cctv', 'driving'];
-            keys.forEach(k => {
-                const keyName = k === 'aid' ? 'firstaid' : k;
-                const valEl = document.getElementById(`skillVal-${keyName}`);
-                const barEl = document.getElementById(`skillBar-${keyName}`);
-                const pct = Math.round((counts[k] / total) * 100);
+            if (qsheBody) {
+                if (state.ptwList.length === 0) {
+                    qsheBody.innerHTML = `<tr><td colspan="8" class="px-4 py-8 text-center text-gray-400">Belum ada PTW terdaftar.</td></tr>`;
+                } else {
+                    qsheBody.innerHTML = state.ptwList.map(ptw => {
+                        let statusStyle = "bg-emerald-50 text-emerald-600";
+                        if (ptw.status === 'Pending') statusStyle = "bg-amber-50 text-amber-600";
+                        if (ptw.status === 'Selesai') statusStyle = "bg-sky-50 text-sky-600";
 
-                if (valEl) valEl.innerText = `${counts[k]} / ${total} Personel`;
-                if (barEl) barEl.style.width = `${pct}%`;
-            });
+                        return `
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-4 py-3.5 font-bold text-gray-900">${ptw.no}</td>
+                                <td class="px-4 py-3.5">${ptw.type}</td>
+                                <td class="px-4 py-3.5">${ptw.contractor}</td>
+                                <td class="px-4 py-3.5">${ptw.location}</td>
+                                <td class="px-4 py-3.5 text-gray-500">${ptw.expiry}</td>
+                                <td class="px-4 py-3.5">${ptw.supervisor}</td>
+                                <td class="px-4 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold ${statusStyle}">${ptw.status}</span></td>
+                                <td class="px-4 py-3.5 text-right flex items-center justify-end gap-1.5">
+                                    <button onclick="openPtwQrModal('${ptw.no}')" class="p-1.5 rounded-lg text-orange-600 bg-orange-50 hover:bg-orange-100 transition" title="Tampilkan QR Code"><i class="fa-solid fa-qrcode"></i></button>
+                                    <button onclick="showPtwDetailModal(state.ptwList.find(p=>p.no==='${ptw.no}'))" class="p-1.5 rounded-lg text-blue-600 bg-blue-50 hover:bg-blue-100 transition" title="Lihat Detail"><i class="fa-solid fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            }
         }
 
-        function renderPersonnelCards() {
-            const container = document.getElementById('personnelCardsContainer');
-            if (!container) return;
-
-            const q = (document.getElementById('personnelSearch')?.value || '').toLowerCase();
-            const filtered = state.personnel.filter(p => p.name.toLowerCase().includes(q) || p.role.toLowerCase().includes(q));
-
-            container.innerHTML = filtered.map(p => `
-                <div class="bg-gray-50/70 border border-gray-100 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <img src="${p.img}" alt="${p.name}" class="h-12 w-12 rounded-full object-cover ring-2 ring-orange-200">
-                        <div>
-                            <h4 class="text-xs font-bold text-gray-900">${p.name}</h4>
-                            <p class="text-[10px] text-gray-400 mt-0.5">${p.role}</p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-1.5 text-[9px] font-semibold">
-                        <span class="px-2 py-0.5 rounded ${p.skills.basic ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-400'}">Basic Training</span>
-                        <span class="px-2 py-0.5 rounded ${p.skills.fire ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-400'}">Fire Emergency</span>
-                        <span class="px-2 py-0.5 rounded ${p.skills.aid ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400'}">First Aid</span>
-                        <span class="px-2 py-0.5 rounded ${p.skills.crowd ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-400'}">Crowd Control</span>
-                        <span class="px-2 py-0.5 rounded ${p.skills.cctv ? 'bg-teal-100 text-teal-800' : 'bg-gray-100 text-gray-400'}">CCTV</span>
-                        <span class="px-2 py-0.5 rounded ${p.skills.driving ? 'bg-orange-100 text-orange-800' : 'bg-gray-100 text-gray-400'}">Defensive Driving</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function searchPersonnel() {
-            renderPersonnelCards();
-        }
-
-        function filterSkillsTable() {
-            const query = (document.getElementById('skillsSearchInput')?.value || '').toLowerCase();
-            const rows = document.querySelectorAll('#skillsTableBody tr');
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
-        }
-
-        function renderHazardsTable() {
-            const tbody = document.getElementById('hazardTableRows');
-            if (!tbody) return;
+        function renderHazards() {
+            const body = document.getElementById('hazardTableRows');
+            if (!body) return;
 
             const q = (document.getElementById('hazardQuery')?.value || '').toLowerCase();
             const filtered = state.hazards.filter(h => h.title.toLowerCase().includes(q) || h.location.toLowerCase().includes(q));
 
-            tbody.innerHTML = filtered.map(h => `
-                <tr class="hover:bg-gray-50 transition">
-                    <td class="px-5 py-4 font-bold text-gray-900">${h.id}</td>
-                    <td class="px-5 py-4 font-semibold text-gray-800">${h.title}</td>
-                    <td class="px-5 py-4 text-gray-500">${h.location}</td>
-                    <td class="px-5 py-4"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold ${h.severity === 'Tinggi' ? 'bg-red-100 text-red-600' : 'bg-amber-100 text-amber-600'}">${h.severity}</span></td>
-                    <td class="px-5 py-4"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold ${h.status === 'Open' ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'}">${h.status}</span></td>
-                    <td class="px-5 py-4">
-                        <button onclick="toggleHazardStatus('${h.id}')" class="px-2.5 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-[10px] font-bold">Ubah Status</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+            if (filtered.length === 0) {
+                body.innerHTML = `<tr><td colspan="6" class="px-5 py-6 text-center text-gray-400">Tidak ada temuan bahaya.</td></tr>`;
+                return;
+            }
 
-        function searchHazards() {
-            renderHazardsTable();
+            body.innerHTML = filtered.map(h => {
+                let badgeClass = "bg-amber-50 text-amber-600";
+                if (h.status === 'In Progress') badgeClass = "bg-blue-50 text-blue-600";
+
+                return `
+                    <tr class="hover:bg-gray-50 transition">
+                        <td class="px-5 py-3.5 font-bold">${h.id}</td>
+                        <td class="px-5 py-3.5 font-medium text-gray-900">${h.title}</td>
+                        <td class="px-5 py-3.5">${h.location}</td>
+                        <td class="px-5 py-3.5"><span class="px-2 py-0.5 rounded font-bold text-[10px] bg-red-50 text-red-600">${h.severity}</span></td>
+                        <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-full font-bold text-[10px] ${badgeClass}">${h.status}</span></td>
+                        <td class="px-5 py-3.5">
+                            <button onclick="showToast('Membuka detail temuan ${h.id}', 'info')" class="text-orange-600 hover:underline font-bold text-[11px]">Detail</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
         function filterHazards(status) {
-            ['all', 'open', 'progress'].forEach(s => {
-                const btn = document.getElementById(`hzBtn-${s}`);
-                if (btn) btn.className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-white text-gray-600 border border-gray-200";
-            });
-
-            if (status === 'All') {
-                document.getElementById('hzBtn-all').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-lrtOrange-600 text-white shadow-sm";
-            } else if (status === 'Open') {
-                document.getElementById('hzBtn-open').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-lrtOrange-600 text-white shadow-sm";
-            } else {
-                document.getElementById('hzBtn-progress').className = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition bg-lrtOrange-600 text-white shadow-sm";
-            }
-
-            const rows = document.querySelectorAll('#hazardTableRows tr');
-            rows.forEach(r => {
-                if (status === 'All') r.style.display = '';
-                else {
-                    const text = r.innerText;
-                    r.style.display = text.includes(status) ? '' : 'none';
-                }
-            });
+            showToast(`Filter bahaya: ${status}`, 'info');
         }
 
-        function toggleHazardStatus(id) {
-            const h = state.hazards.find(x => x.id === id);
-            if (h) {
-                h.status = h.status === 'Open' ? 'In Progress' : 'Closed';
-                renderHazardsTable();
-                renderPendingItemsDashboard();
-                showToast(`Status temuan ${id} diperbarui menjadi ${h.status}`, 'info');
-            }
+        function searchHazards() {
+            renderHazards();
         }
 
         function renderBujpReports() {
-            const tbody = document.getElementById('reportTableBody');
-            if (!tbody) return;
+            const body = document.getElementById('reportTableBody');
+            if (!body) return;
 
-            const q = (document.getElementById('reportSearch')?.value || '').toLowerCase();
-            const month = document.getElementById('repFilterMonth')?.value;
-            
-            let filtered = state.bujpReports.filter(r => r.name.toLowerCase().includes(q) || r.uploadedBy.toLowerCase().includes(q));
-            if (month) filtered = filtered.filter(r => r.month === month);
-
-            tbody.innerHTML = filtered.map(r => `
+            body.innerHTML = state.bujpReports.map(r => `
                 <tr class="hover:bg-gray-50 transition">
-                    <td class="px-5 py-4 font-bold text-gray-800">${r.name}</td>
-                    <td class="px-5 py-4 text-gray-500">${r.date}</td>
-                    <td class="px-5 py-4 text-gray-600 font-medium">${r.uploadedBy}</td>
-                    <td class="px-5 py-4"><span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-50 text-emerald-600">Disetujui</span></td>
-                    <td class="px-5 py-4">
-                        <button onclick="showToast('Mengunduh ${r.name}...','info')" class="text-lrtOrange-600 hover:underline font-bold text-xs"><i class="fa-solid fa-download"></i> Unduh</button>
+                    <td class="px-5 py-3.5 font-bold text-gray-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-pdf text-red-500"></i> ${r.name}
+                    </td>
+                    <td class="px-5 py-3.5 text-gray-500">${r.date}</td>
+                    <td class="px-5 py-3.5">${r.uploadedBy}</td>
+                    <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600">Terverifikasi</span></td>
+                    <td class="px-5 py-3.5">
+                        <button onclick="showToast('Membuka berkas ${r.name}', 'info')" class="text-sky-600 hover:underline font-bold text-[11px]"><i class="fa-solid fa-download mr-1"></i> Unduh</button>
                     </td>
                 </tr>
             `).join('');
@@ -2360,349 +2490,134 @@
             renderBujpReports();
         }
 
-        function renderVmsList() {
-            const container = document.getElementById('vmsApprovalsList');
-            const countEl = document.getElementById('metric-visitor-traffic');
-            if (countEl) countEl.innerText = state.visitorList.length;
+        function renderVms() {
+            const list = document.getElementById('vmsApprovalsList');
+            if (!list) return;
 
-            if (!container) return;
-
-            container.innerHTML = state.visitorList.map(v => `
-                <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
+            list.innerHTML = state.visitorList.map(v => `
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex items-center justify-between text-xs">
                     <div>
                         <h5 class="font-bold text-gray-800">${v.name}</h5>
-                        <p class="text-[10px] text-gray-400 mt-0.5">${v.org} • ${v.date} ${v.time}</p>
+                        <p class="text-[10px] text-gray-400">${v.org} | ${v.date} (${v.time})</p>
                     </div>
-                    <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-bold">Approved</span>
+                    <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-emerald-100 text-emerald-700">Approved</span>
                 </div>
             `).join('');
         }
 
         function renderSchedules() {
-            const tbody = document.getElementById('scheduleInspectionTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = state.schedules.map(s => `
+            const body = document.getElementById('scheduleInspectionTableBody');
+            if (!body) return;
+
+            body.innerHTML = state.schedules.map(s => `
                 <tr class="hover:bg-gray-50 transition">
-                    <td class="px-5 py-4 font-bold text-gray-800">${s.code}</td>
-                    <td class="px-5 py-4 text-gray-600">${s.location}</td>
-                    <td class="px-5 py-4 text-gray-500">${s.date}</td>
-                    <td class="px-5 py-4"><span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-sky-50 text-sky-600 border border-sky-200">${s.status}</span></td>
-                    <td class="px-5 py-4 text-gray-700 font-medium">${s.officer}</td>
+                    <td class="px-5 py-3.5 font-bold">${s.code}</td>
+                    <td class="px-5 py-3.5">${s.location}</td>
+                    <td class="px-5 py-3.5 text-gray-500">${s.date}</td>
+                    <td class="px-5 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-sky-50 text-sky-600">${s.status}</span></td>
+                    <td class="px-5 py-3.5">${s.officer}</td>
                 </tr>
             `).join('');
         }
 
-        function renderPendingItemsDashboard() {
-            const container = document.getElementById('pendingItemsList');
-            if (!container) return;
+        function renderCompetencySkills() {
+            let basicCount = 0, fireCount = 0, aidCount = 0, crowdCount = 0, cctvCount = 0, drivingCount = 0;
 
-            const pendingPtws = state.ptwList.filter(p => p.status === 'Pending');
-            const openHazards = state.hazards.filter(h => h.status === 'Open');
-
-            let html = '';
-            pendingPtws.forEach(p => {
-                html += `
-                    <div class="p-3 bg-amber-50/60 border border-amber-100 rounded-xl flex items-center justify-between text-xs">
-                        <div>
-                            <span class="font-bold text-amber-900">${p.no}</span>
-                            <p class="text-[10px] text-amber-700 mt-0.5">${p.type} - ${p.location}</p>
-                        </div>
-                        <button onclick="switchTab('security'); switchSubTab('ptw'); showPtwDetail('${p.no}')" class="px-2.5 py-1 bg-amber-600 text-white rounded-lg text-[10px] font-bold shadow-sm hover:bg-amber-700">Verifikasi</button>
-                    </div>
-                `;
+            state.personnel.forEach(p => {
+                if (p.skills.basic) basicCount++;
+                if (p.skills.fire) fireCount++;
+                if (p.skills.aid) aidCount++;
+                if (p.skills.crowd) crowdCount++;
+                if (p.skills.cctv) cctvCount++;
+                if (p.skills.driving) drivingCount++;
             });
 
-            openHazards.forEach(h => {
-                html += `
-                    <div class="p-3 bg-red-50/60 border border-red-100 rounded-xl flex items-center justify-between text-xs">
-                        <div>
-                            <span class="font-bold text-red-900">${h.id}: ${h.title}</span>
-                            <p class="text-[10px] text-red-700 mt-0.5">${h.location}</p>
-                        </div>
-                        <button onclick="switchTab('qshe'); switchQsheSubTab('hazard')" class="px-2.5 py-1 bg-red-600 text-white rounded-lg text-[10px] font-bold shadow-sm hover:bg-red-700">Lihat</button>
-                    </div>
-                `;
-            });
+            const updateBar = (id, count) => {
+                const pct = Math.round((count / state.totalPersonnel) * 100);
+                const bar = document.getElementById(`skillBar-${id}`);
+                const val = document.getElementById(`skillVal-${id}`);
+                if (bar) bar.style.width = `${pct}%`;
+                if (val) val.innerText = `${count} / ${state.totalPersonnel} Personel (${pct}%)`;
+            };
 
-            if (!html) {
-                html = '<p class="text-[11px] text-gray-400 text-center py-4">Semua laporan telah diverifikasi & selesai.</p>';
+            updateBar('basic', basicCount);
+            updateBar('fire', fireCount);
+            updateBar('firstaid', aidCount);
+            updateBar('crowd', crowdCount);
+            updateBar('cctv', cctvCount);
+            updateBar('driving', drivingCount);
+
+            // Render personnel cards in matrix panel
+            const cardContainer = document.getElementById('personnelCardsContainer');
+            if (cardContainer) {
+                cardContainer.innerHTML = state.personnel.map(p => `
+                    <div class="bg-gray-50/70 rounded-2xl border border-gray-100 p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <img src="${p.img}" class="h-10 w-10 rounded-full object-cover ring-2 ring-orange-200">
+                            <div>
+                                <h5 class="text-xs font-bold text-gray-800">${p.name}</h5>
+                                <p class="text-[10px] text-gray-400">${p.role}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-1.5">
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${p.skills.basic ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-400'}">Basic</span>
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${p.skills.fire ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-400'}">Fire</span>
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${p.skills.aid ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-400'}">First Aid</span>
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${p.skills.crowd ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-400'}">Crowd</span>
+                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${p.skills.cctv ? 'bg-emerald-100 text-emerald-800' : 'bg-gray-100 text-gray-400'}">CCTV</span>
+                        </div>
+                    </div>
+                `).join('');
             }
-
-            container.innerHTML = html;
         }
 
-        function showPtwDetail(ptwNo) {
-            const item = state.ptwList.find(p => p.no === ptwNo);
-            if (!item) return;
+        function renderMetrics() {
+            const pendingList = document.getElementById('pendingItemsList');
+            const pendingPtws = state.ptwList.filter(p => p.status === 'Pending');
 
-            const noEl = document.getElementById('detPtwNo');
-            const badgeEl = document.getElementById('detPtwStatusBadge');
-            const typeEl = document.getElementById('detPtwType');
-            const locEl = document.getElementById('detPtwLocation');
-            const contrEl = document.getElementById('detPtwContractor');
-            const supEl = document.getElementById('detPtwSupervisor');
-            const expEl = document.getElementById('detPtwExpiry');
-            const actionContainer = document.getElementById('detPtwActionContainer');
-
-            if (noEl) noEl.innerText = item.no;
-            if (badgeEl) {
-                badgeEl.innerText = item.status;
-                badgeEl.className = `px-3 py-1 rounded-full text-xs font-bold ${
-                    item.status === 'Aktif' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
-                    item.status === 'Pending' ? 'bg-amber-50 text-amber-600 border border-amber-200' :
-                    'bg-gray-100 text-gray-500'
-                }`;
-            }
-            if (typeEl) typeEl.innerText = item.type;
-            if (locEl) locEl.innerText = item.location;
-            if (contrEl) contrEl.innerText = item.contractor;
-            if (supEl) supEl.innerText = item.supervisor;
-            if (expEl) expEl.innerText = `${item.expiry} (${item.time})`;
-
-            if (actionContainer) {
-                if (item.status === 'Pending') {
-                    actionContainer.innerHTML = `
-                        <div class="flex gap-2 w-full">
-                            <button onclick="updatePtwStatus('${item.no}', 'Aktif')" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition shadow"><i class="fa-solid fa-check mr-1"></i> Setujui & Aktifkan PTW</button>
-                            <button onclick="updatePtwStatus('${item.no}', 'Selesai')" class="py-2.5 px-4 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold transition">Tolak / Close</button>
-                        </div>
-                    `;
-                } else if (item.status === 'Aktif') {
-                    actionContainer.innerHTML = `
-                        <button onclick="updatePtwStatus('${item.no}', 'Selesai')" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition shadow"><i class="fa-solid fa-flag-checkered mr-1"></i> Tandai Selesai Pekerjaan (Close PTW)</button>
-                    `;
+            if (pendingList) {
+                if (pendingPtws.length === 0) {
+                    pendingList.innerHTML = `<p class="text-[11px] text-gray-400 py-2 text-center">Tidak ada laporan tertunda.</p>`;
                 } else {
-                    actionContainer.innerHTML = `<p class="text-[11px] text-gray-400 text-center font-medium">Izin kerja ini telah ditutup/selesai.</p>`;
+                    pendingList.innerHTML = pendingPtws.map(p => `
+                        <div class="bg-amber-50/50 border border-amber-100 p-3 rounded-xl flex items-center justify-between text-xs">
+                            <div>
+                                <h5 class="font-bold text-amber-900">${p.no}</h5>
+                                <p class="text-[10px] text-amber-700">${p.type} - ${p.contractor}</p>
+                            </div>
+                            <button onclick="showPtwDetailModal(state.ptwList.find(item=>item.no==='${p.no}'))" class="px-3 py-1 rounded-lg bg-amber-500 text-white font-bold text-[10px] hover:bg-amber-600">Verifikasi</button>
+                        </div>
+                    `).join('');
                 }
             }
 
-            openModal('ptwDetailModal');
+            const totalCount = document.getElementById('ptw-count-total');
+            const activeCount = document.getElementById('ptw-count-active');
+            const pendingCount = document.getElementById('ptw-count-pending');
+            const closedCount = document.getElementById('ptw-count-closed');
+
+            if (totalCount) totalCount.innerText = state.ptwList.length;
+            if (activeCount) activeCount.innerText = state.ptwList.filter(p => p.status === 'Aktif').length;
+            if (pendingCount) pendingCount.innerText = pendingPtws.length;
+            if (closedCount) closedCount.innerText = state.ptwList.filter(p => p.status === 'Selesai').length;
+
+            const hzStat = document.getElementById('qshe-stat-hazard-count');
+            if (hzStat) hzStat.innerText = `${state.hazards.length} Laporan`;
+
+            const visStat = document.getElementById('metric-visitor-traffic');
+            if (visStat) visStat.innerText = state.visitorList.length;
         }
 
-        function updatePtwStatus(ptwNo, newStatus) {
-            const item = state.ptwList.find(p => p.no === ptwNo);
-            if (item) {
-                item.status = newStatus;
-                renderPtwTable();
-                renderPendingItemsDashboard();
-                showPtwDetail(ptwNo);
-                showToast(`Status PTW ${ptwNo} diperbarui menjadi: ${newStatus}`, 'success');
-            }
+        function filterSkillsTable() {
+            const q = document.getElementById('skillsSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#skillsTableBody tr');
+            rows.forEach(r => {
+                r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+            });
         }
 
-        function submitAparSchedule(e) {
-            e.preventDefault();
-            const code = document.getElementById('schedCode')?.value;
-            const location = document.getElementById('schedLoc')?.value;
-            const date = document.getElementById('schedDate')?.value;
-            const officer = document.getElementById('schedOfficer')?.value;
-
-            const newSched = { code, location, date, officer, status: 'Terjadwal' };
-            state.schedules.unshift(newSched);
-            renderSchedules();
-            sendToBackend('addAparSchedule', newSched);
-
-            closeModal('scheduleModal');
-            showToast(`Jadwal inspeksi untuk ${code} berhasil disimpan`, 'success');
-            e.target.reset();
-        }
-
-        function submitHazardReport(e) {
-            e.preventDefault();
-            const title = document.getElementById('hzTitle')?.value;
-            const location = document.getElementById('hzLoc')?.value;
-            const severity = document.getElementById('hzSeverity')?.value;
-
-            const newHz = {
-                id: `HZ-00${state.hazards.length + 1}`,
-                title, location, severity, status: 'Open'
-            };
-
-            state.hazards.unshift(newHz);
-            renderHazardsTable();
-            renderPendingItemsDashboard();
-            sendToBackend('addHazard', newHz);
-
-            closeModal('hazardModal');
-            showToast(`Laporan temuan bahaya ${newHz.id} berhasil terkirim`, 'success');
-            e.target.reset();
-        }
-
-        function submitBujpReport(e) {
-            e.preventDefault();
-            const name = document.getElementById('uplRepName')?.value;
-            const month = document.getElementById('uplRepMonth')?.value;
-            const date = new Date().toISOString().split('T')[0];
-
-            const newRep = {
-                id: `BUJP-REP-${100 + state.bujpReports.length + 1}`,
-                name, date, uploadedBy: state.userRole === 'QSHE' ? 'Petugas QSHE' : 'Rinna Dwi Oktavia', month, status: 'Approved'
-            };
-
-            state.bujpReports.unshift(newRep);
-            renderBujpReports();
-            sendToBackend('addBujpReport', newRep);
-
-            closeModal('uploadReportModal');
-            showToast(`Laporan '${name}' berhasil diunggah`, 'success');
-            e.target.reset();
-        }
-
-        function submitVmsForm(e) {
-            e.preventDefault();
-            const name = document.getElementById('vmsName')?.value;
-            const org = document.getElementById('vmsOrg')?.value || 'Umum';
-            const date = document.getElementById('vmsDate')?.value;
-            const time = document.getElementById('vmsTime')?.value;
-
-            const newVms = { name, org, date, time, status: 'Approved' };
-            state.visitorList.unshift(newVms);
-            renderVmsList();
-            sendToBackend('addVms', newVms);
-
-            showToast(`Pengajuan kunjungan atas nama ${name} berhasil didaftarkan`, 'success');
-            e.target.reset();
-        }
-
-        function sendToBackend(action, data) {
-            if (!state.backendUrl) return;
-            fetch(state.backendUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action, ...data })
-            }).catch(err => console.error("Backend dispatch error:", err));
-        }
-
-        function renderPtwTable() {
-            const tbody = document.getElementById('ptwTableBody');
-            const tbodyQshe = document.getElementById('ptwQsheTableBody');
-            
-            const total = state.ptwList.length;
-            const active = state.ptwList.filter(p => p.status === 'Aktif').length;
-            const pending = state.ptwList.filter(p => p.status === 'Pending').length;
-            const closed = state.ptwList.filter(p => p.status === 'Selesai').length;
-
-            const elTotal = document.getElementById('ptw-count-total');
-            const elActive = document.getElementById('ptw-count-active');
-            const elPending = document.getElementById('ptw-count-pending');
-            const elClosed = document.getElementById('ptw-count-closed');
-
-            if (elTotal) elTotal.innerText = total;
-            if (elActive) elActive.innerText = active;
-            if (elPending) elPending.innerText = pending;
-            if (elClosed) elClosed.innerText = closed;
-
-            const rowTemplate = p => `
-                <tr class="hover:bg-gray-50/70 transition">
-                    <td class="px-4 py-3 font-bold text-orange-600">${p.no}</td>
-                    <td class="px-4 py-3 font-medium">${p.type}</td>
-                    <td class="px-4 py-3 text-gray-600">${p.contractor}</td>
-                    <td class="px-4 py-3 text-gray-500">${p.location}</td>
-                    <td class="px-4 py-3 text-gray-500">${p.expiry} (${p.time})</td>
-                    <td class="px-4 py-3 text-gray-600">${p.supervisor}</td>
-                    <td class="px-4 py-3">
-                        <span class="px-2.5 py-0.5 rounded-full text-[9px] font-bold ${
-                            p.status === 'Aktif' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' :
-                            p.status === 'Pending' ? 'bg-amber-50 text-amber-600 border border-amber-200' :
-                            'bg-gray-100 text-gray-500'
-                        }">${p.status}</span>
-                    </td>
-                    <td class="px-4 py-3 text-right">
-                        <div class="flex items-center justify-end gap-1.5">
-                            <button onclick="displayPtwQr('${p.no}')" class="p-1.5 bg-orange-50 hover:bg-orange-100 text-orange-600 rounded-lg text-xs" title="Lihat QR Code">
-                                <i class="fa-solid fa-qrcode"></i>
-                            </button>
-                            <button onclick="showPtwDetail('${p.no}')" class="p-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs" title="Detail & Verifikasi">
-                                <i class="fa-solid fa-eye"></i>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            `;
-
-            if (tbody) tbody.innerHTML = state.ptwList.map(rowTemplate).join('');
-            if (tbodyQshe) tbodyQshe.innerHTML = state.ptwList.map(rowTemplate).join('');
-        }
-
-        function submitNewPtw(e) {
-            e.preventDefault();
-            
-            // Check role authorization
-            if (state.userRole !== 'QSHE') {
-                showToast('Akses Ditolak: Input PTW Baru hanya dapat dilakukan oleh Petugas QSHE', 'error');
-                return;
-            }
-
-            let no = document.getElementById('ptwNoQshe')?.value || document.getElementById('ptwNo')?.value;
-            let type = document.getElementById('ptwTypeQshe')?.value || document.getElementById('ptwType')?.value;
-            let contractor = document.getElementById('ptwContractorQshe')?.value || document.getElementById('ptwContractor')?.value;
-            let location = document.getElementById('ptwLocationQshe')?.value || document.getElementById('ptwLocation')?.value;
-            let expiry = document.getElementById('ptwDateQshe')?.value || document.getElementById('ptwDate')?.value;
-            let time = document.getElementById('ptwTimeQshe')?.value || document.getElementById('ptwTime')?.value;
-            let supervisor = document.getElementById('ptwSupervisorQshe')?.value || document.getElementById('ptwSupervisor')?.value;
-
-            if (!no || !contractor || !location) {
-                no = document.getElementById('ptwNo')?.value;
-                type = document.getElementById('ptwType')?.value;
-                contractor = document.getElementById('ptwContractor')?.value;
-                location = document.getElementById('ptwLocation')?.value;
-                expiry = document.getElementById('ptwDate')?.value;
-                time = document.getElementById('ptwTime')?.value;
-                supervisor = document.getElementById('ptwSupervisor')?.value;
-            }
-
-            const newPtw = {
-                no, type, contractor, location, expiry, time, supervisor, status: 'Pending'
-            };
-
-            state.ptwList.unshift(newPtw);
-            renderPtwTable();
-            renderPendingItemsDashboard();
-            sendToBackend('addPtw', newPtw);
-
-            closeModal('addPtwModal');
-            showToast(`Permit to Work ${no} berhasil ditambahkan!`, 'success');
-            e.target.reset();
-        }
-
-        function handleOpenAddPtwModal() {
-            if (state.userRole !== 'QSHE') {
-                showToast('Akses Ditolak: Input PTW Baru hanya dapat dilakukan oleh Petugas QSHE', 'error');
-                return;
-            }
-            openModal('addPtwModal');
-        }
-
-        function toggleUserRole() {
-            if (state.userRole === 'BUJP') {
-                state.userRole = 'QSHE';
-                document.getElementById('userPillLabel').innerText = 'Petugas QSHE LRT Jakarta';
-                document.getElementById('userMenuRoleTitle').innerText = 'Petugas QSHE';
-                document.getElementById('userMenuEmail').innerText = 'qshe.admin@lrtjakarta.co.id';
-                document.getElementById('menuRoleName').innerText = 'Petugas QSHE';
-                showToast('Peran berhasil diubah menjadi Petugas QSHE', 'success');
-            } else {
-                state.userRole = 'BUJP';
-                document.getElementById('userPillLabel').innerText = 'Badan Usaha Jasa Pengamanan (BUJP)';
-                document.getElementById('userMenuRoleTitle').innerText = 'Petugas Keamanan (BUJP)';
-                document.getElementById('userMenuEmail').innerText = 'bujp.security@lrtjakarta.co.id';
-                document.getElementById('menuRoleName').innerText = 'BUJP Security';
-                showToast('Peran berhasil diubah menjadi BUJP Security', 'info');
-            }
-        }
-
-        function handleLogin(e) {
-            e.preventDefault();
-            state.isLoggedIn = true;
-            document.getElementById('loginPage').classList.add('hidden');
-            showToast('Selamat datang di Portal AK4L LRT Jakarta', 'success');
-        }
-
-        function handleLogout() {
-            state.isLoggedIn = false;
-            document.getElementById('loginPage').classList.remove('hidden');
-            showToast('Anda telah keluar dari aplikasi', 'info');
+        function searchPersonnel() {
+            renderCompetencySkills();
         }
 
         function showToast(msg, type = 'info') {
@@ -2710,19 +2625,19 @@
             if (!container) return;
 
             const toast = document.createElement('div');
-            toast.className = `p-3.5 rounded-2xl shadow-xl text-xs font-bold text-white flex items-center justify-between gap-3 pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0 ${
-                type === 'success' ? 'bg-emerald-600' :
-                type === 'error' ? 'bg-red-600' :
-                'bg-gray-900'
-            }`;
+            let bg = "bg-gray-800 text-white";
+            let icon = "fa-circle-info";
 
-            toast.innerHTML = `
-                <div class="flex items-center gap-2">
-                    <i class="${type === 'success' ? 'fa-solid fa-circle-check' : type === 'error' ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-info'}"></i>
-                    <span>${msg}</span>
-                </div>
-                <button onclick="this.parentElement.remove()" class="text-white/80 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-            `;
+            if (type === 'success') {
+                bg = "bg-emerald-600 text-white";
+                icon = "fa-circle-check";
+            } else if (type === 'error') {
+                bg = "bg-red-600 text-white";
+                icon = "fa-circle-xmark";
+            }
+
+            toast.className = `${bg} px-4 py-3 rounded-2xl shadow-xl text-xs font-bold flex items-center gap-2.5 pointer-events-auto transition-all transform translate-y-2 opacity-0 duration-200`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-sm"></i> <span>${msg}</span>`;
 
             container.appendChild(toast);
 
@@ -2736,34 +2651,67 @@
             }, 3500);
         }
 
-        function openHazardModal() { openModal('hazardModal'); }
+        function toggleUserRole() {
+            if (state.userRole === 'BUJP') {
+                state.userRole = 'QSHE';
+            } else {
+                state.userRole = 'BUJP';
+            }
+            updateUserRoleUI();
+            showToast(`Peran pengguna diubah menjadi: ${state.userRole}`, 'info');
+        }
 
-        function updateClock() {
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-            const timeStr = now.toLocaleDateString('id-ID', options);
-            const clockEl = document.getElementById('liveTimestamp');
-            if (clockEl) clockEl.innerText = timeStr;
+        function updateUserRoleUI() {
+            const pillLabel = document.getElementById('userPillLabel');
+            const menuTitle = document.getElementById('userMenuRoleTitle');
+            const menuName = document.getElementById('menuRoleName');
+
+            if (state.userRole === 'BUJP') {
+                if (pillLabel) pillLabel.innerText = "Badan Usaha Jasa Pengamanan (BUJP)";
+                if (menuTitle) menuTitle.innerText = "Petugas Keamanan (BUJP)";
+                if (menuName) menuName.innerText = "BUJP Security";
+            } else {
+                if (pillLabel) pillLabel.innerText = "Petugas QSHE LRT Jakarta";
+                if (menuTitle) menuTitle.innerText = "Auditor & Supervisor QSHE";
+                if (menuName) menuName.innerText = "QSHE Officer";
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            state.isLoggedIn = true;
+            document.getElementById('loginPage').classList.add('hidden');
+            showToast('Berhasil masuk ke Portal AK4L LRT Jakarta', 'success');
+        }
+
+        function handleLogout() {
+            state.isLoggedIn = false;
+            document.getElementById('loginPage').classList.remove('hidden');
+            toggleUserMenu();
+            showToast('Anda telah keluar dari aplikasi', 'info');
         }
 
         window.onload = function() {
-            updateClock();
-            setInterval(updateClock, 10000);
-
-            renderSkillMatrixSummary();
-            renderPersonnelCards();
-            renderHazardsTable();
+            renderPtwTables();
+            renderHazards();
             renderBujpReports();
-            renderVmsList();
-            renderPtwTable();
+            renderVms();
             renderSchedules();
-            renderPendingItemsDashboard();
+            renderCompetencySkills();
+            renderMetrics();
+            updateUserRoleUI();
 
-            const today = new Date().toISOString().split('T')[0];
-            ['vmsDate', 'schedDate', 'ptwDate'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = today;
-            });
+            // Fetch live data if backend URL exists
+            if (state.backendUrl) {
+                fetch(`${state.backendUrl}?action=getData`)
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status === 'success') {
+                            showToast('Data Google Sheets tersinkronisasi!', 'success');
+                        }
+                    })
+                    .catch(() => {});
+            }
         };
     </script>
 </body>
