@@ -1182,49 +1182,27 @@
 
                     <!-- TWO COLUMN LAYOUT: PENCARIAN & QR CODE vs DATA PTW -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        
-                        <!-- LEFT COLUMN: PENCARIAN & PINDAI QRCODE -->
-                        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm flex flex-col gap-5 lg:col-span-1">
-                            <div>
-                                <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
-                                    <i class="fa-solid fa-qrcode text-[#f24d1a]"></i> Pencarian & Pindai QR Code
-                                </h3>
-                                <p class="text-xs text-gray-400 mt-0.5">Verifikasi dokumen PTW melalui pindaian kamera QR Code atau pencarian manual nomor PTW.</p>
-                            </div>
-
                             <!-- Pindai QR Code Card / Trigger -->
                             <div class="bg-gradient-to-br from-[#f24d1a] to-[#fa881b] text-white rounded-2xl p-5 shadow-lg flex flex-col items-center text-center">
                                 <div class="bg-white/20 p-4 rounded-2xl mb-3 backdrop-blur-sm">
                                     <i class="fa-solid fa-qrcode text-4xl"></i>
                                 </div>
-                                <h4 class="font-bold text-sm mb-1">Scanner QR PTW Lapangan</h4>
-                                <p class="text-[11px] text-white/90 mb-4 font-light">Gunakan kamera perangkat untuk memindai kode QR pada fisik izin kerja.</p>
+                                <h4 class="font-bold text-sm mb-1">Pindai QR E-PTW</h4>
                                 <button onclick="openQrScannerModal()" class="w-full py-2.5 px-4 bg-white hover:bg-orange-50 text-[#f24d1a] font-bold text-xs rounded-xl transition shadow-sm flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-camera"></i> Buka Kamera Scanner
+                                    <i class="fa-solid fa-camera"></i> Buka Kamera
                                 </button>
                             </div>
 
                             <!-- Form Pencarian Nomor PTW Manual -->
                             <div class="bg-gray-50/70 rounded-2xl border border-gray-100 p-4 flex flex-col gap-3">
                                 <label class="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                                    <i class="fa-solid fa-magnifying-glass text-orange-500"></i> Cari No. PTW Manual
+                                    <i class="fa-solid fa-magnifying-glass text-orange-500"></i> Masukan No. E-PTW
                                 </label>
                                 <div class="relative">
                                     <input type="text" id="ptwHeaderSearchInput" onkeyup="if(event.key==='Enter') handleHeaderPtwSearch()" placeholder="Masukkan No. PTW (Cth: PTW-2026-001)" class="w-full pl-3 pr-10 py-2.5 rounded-xl border border-gray-200 text-xs bg-white focus:outline-none focus:ring-1 focus:ring-lrtOrange-500">
                                     <button onclick="handleHeaderPtwSearch()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-orange-500 hover:text-orange-600">
                                         <i class="fa-solid fa-arrow-right text-xs"></i>
                                     </button>
-                                </div>
-                                <p class="text-[10px] text-gray-400 leading-normal">Tekan Enter atau klik tombol panah untuk memverifikasi detail izin kerja PTW.</p>
-                            </div>
-
-                            <!-- Fast Action / Demo Quick Check -->
-                            <div class="border-t border-gray-100 pt-4">
-                                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-2">Simulasi Cepat Verifikasi PTW:</span>
-                                <div class="flex flex-wrap gap-1.5">
-                                    <button onclick="handlePtwScanResult('PTW-2026-001')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold transition">PTW-2026-001</button>
-                                    <button onclick="handlePtwScanResult('PTW-2026-002')" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold transition">PTW-2026-002</button>
-                                    <button onclick="handlePtwScanResult('PTW-2026-003')" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-lg text-[10px] font-bold transition">PTW-2026-003</button>
                                 </div>
                             </div>
                         </div>
@@ -1234,9 +1212,8 @@
                             <div class="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
                                 <div>
                                     <h3 class="text-base font-bold text-gray-800 flex items-center gap-2">
-                                        <i class="fa-solid fa-file-contract text-orange-500"></i> Data Permit to Work (PTW)
+                                        <i class="fa-solid fa-file-contract text-orange-500"></i> Data Permit to Work
                                     </h3>
-                                    <p class="text-xs text-gray-400 mt-0.5">Hasil pindaian QR Code atau pencarian nomor PTW</p>
                                 </div>
                             </div>
 
@@ -1257,8 +1234,6 @@
                                         <tr>
                                             <td colspan="7" class="px-4 py-12 text-center bg-gray-50/50">
                                                 <div class="max-w-md mx-auto flex flex-col items-center justify-center text-center">
-                                                    <div class="bg-orange-50 text-orange-500 h-14 w-14 rounded-2xl flex items-center justify-center mb-3 border border-orange-100 shadow-sm">
-                                                    </div>
                                                     <p class="text-[11px] text-gray-400 font-light leading-relaxed">
                                                         Gunakan tombol <span class="font-semibold text-gray-600">Buka Kamera Scanner</span> di panel sebelah kiri atau ketik nomor PTW manual untuk memverifikasi.
                                                     </p>
@@ -2351,11 +2326,11 @@ function doGet(e) {
                 if (headerTitle) headerTitle.innerText = "Dashboard Utama";
                 if (headerSub) headerSub.innerText = "Ringkasan Portal AK4L LRT Jakarta";
             } else if (tabId === 'qshe') {
-                if (headerTitle) headerTitle.innerText = "Modul QSHE";
+                if (headerTitle) headerTitle.innerText = "Departemen QSHE";
                 if (headerSub) headerSub.innerText = "Kualitas, Keselamatan, Kesehatan, & Lingkungan";
                 switchQsheSubTab(state.activeQsheSubTab);
             } else if (tabId === 'security') {
-                if (headerTitle) headerTitle.innerText = "Modul Security";
+                if (headerTitle) headerTitle.innerText = "Departemen Security";
                 if (headerSub) headerSub.innerText = "Sistem Pengawasan Keamanan & BUJP";
                 switchSubTab(state.activeSubTab);
             } else if (tabId === 'apar') {
